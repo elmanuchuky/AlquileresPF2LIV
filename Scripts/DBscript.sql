@@ -1,22 +1,20 @@
-create dataBase TP_Alquileres_LabIV
+drop dataBase TP_Alquileres_LabIV
 use TP_Alquileres_LabIV
 
-
-Create table Tabla_Puestos(
+Create table Puestos(
 id_puesto int identity,
 piso int,
+CHECK (piso between 1 and 5),
 cantidad_sillas int,
 tiene_ventana bit,
-constraint pk_tabla_puestos primary key (id_puesto)
+constraint pk_puestos primary key (id_puesto)
 )
 
 create table Tipos_documento(
  id_tipo_documento int identity,
  documento varchar(20)
- constraint pk_tipo_documento primary key (id_tipo_documento))
-
-
-
+ constraint pk_tipo_documento primary key (id_tipo_documento)
+ )
 
 create table Clientes(
 id_cliente int identity,
@@ -39,12 +37,10 @@ cantidad_sillas_adicionales int,
 tene_acceso_sala_reuniones int,
 constraint pk_alquileres  primary key (id_alquiler),
 constraint fk_cliente_alquileres foreign key (id_cliente) references Clientes(id_cliente),
-constraint fk_puesto_alquileres foreign key (id_puesto) references Tabla_Puestos(id_puesto)
+constraint fk_puesto_alquileres foreign key (id_puesto) references Puestos(id_puesto)
 )
 
 insert into Tipos_documento(documento)values('CI')
 insert into Tipos_documento(documento)values('DNI')
 insert into Tipos_documento(documento)values('LC')
 insert into Tipos_documento(documento)values('LE')
-
-
