@@ -1,4 +1,4 @@
-drop dataBase TP_Alquileres_LabIV
+create dataBase TP_Alquileres_LabIV
 use TP_Alquileres_LabIV
 
 Create table Puestos(
