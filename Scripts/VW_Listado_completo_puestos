@@ -1,0 +1,10 @@
+--El listado debe mostrar todos los puestos, indicando con claridad cuáles están ocupados 
+--y cuáles libres. 
+create view vw_listado_completo_puestos
+as
+select p.id_puesto as 'puesto', p.piso, 'ocupado' as 'estado'
+from puestos p join alquileres a on p.id_puesto=a.id_puesto
+union
+select pu.id_puesto as 'puesto', pu.piso, 'libre' as 'estado'
+from puestos pu left join alquileres al on pu.id_puesto=al.id_puesto
+where al.id_alquiler is null
