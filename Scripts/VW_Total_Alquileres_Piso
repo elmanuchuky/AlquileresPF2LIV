@@ -1,0 +1,6 @@
+--Por cada piso del edificio debe indicarse el total recaudado. 
+create view vw_total_alquiles_por_piso
+as
+select p.piso, sum(dbo.f_importe_alquiler(a.id_alquiler)) as 'total recaudado'
+from Alquileres a join Puestos p on a.id_puesto=p.id_puesto
+group by p.piso
