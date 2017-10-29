@@ -1,0 +1,8 @@
+--Este listado debe mostrar todos los clientes indicando por cada uno de ellos la cantidad
+-- total de puestos que alquilan y el importe total de sus alquileres. 
+create view vw_listado_clientes
+as
+select c.documento, c.nombre_cliente, c.apellido_cliente, count(a.id_puesto) as 'total de puestos',
+ sum(dbo.f_importe_alquiler(a.id_alquiler)) as 'importe total' 
+from clientes c join alquileres a on a.id_cliente=c.id_cliente
+group by c.id_cliente, c.documento, c.nombre_cliente, c.apellido_cliente
