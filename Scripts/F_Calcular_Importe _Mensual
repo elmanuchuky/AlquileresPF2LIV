@@ -1,0 +1,55 @@
+--Debe recibir como parametro el valor del id_alquileres
+--Precio base: Los puestos de los pisos 1, 2 y 3 cuestan $2000 por mes mientras que en los pisos 4 y 
+--5 los puestos son más grandes y cuestan $3000. Todo puesto ubicado en una ventana cuesta $500 más
+--Adicionales opcionales: Cada computadora que soliciten los clientes suma $800 y el acceso con tiempo 
+--libre a las salas de reuniones incrementa el alquiler en $1000. Si requiere sillas extra se deben 
+--sumar $100 por cada una 
+
+
+create function f_importe_alquiler(@alquiler int=0)
+returns float
+begin
+declare @importe float=0,
+@piso int=0,
+@ventana bit=0,
+@computadoras int=0,
+@sala bit=0,
+@silla int=0
+
+select @piso=p.piso, @ventana=p.tiene_ventana, @computadoras=a.cantidad_computadoras,
+@sala=a.tene_acceso_sala_reuniones, @silla=a.cantidad_sillas_adicionales
+from alquileres a join puestos p
+on a.id_puesto=p.id_puesto
+where a.id_alquiler=@alquiler
+
+if(@piso between 1 and 3)
+begin
+set @importe=2000
+end
+else 
+begin
+set @importe=3000
+end
+
+if(@ventana=1)
+begin
+set @importe=@importe+500
+end
+
+if(@computadoras>0)
+begin
+set @importe=@importe+(@computadoras*800)
+end
+
+if(@sala=1)
+begin
+set @importe=@importe+1000
+end
+
+if(@silla>0)
+begin
+set @importe=@importe+(@silla*100)
+end
+
+return @importe
+end
