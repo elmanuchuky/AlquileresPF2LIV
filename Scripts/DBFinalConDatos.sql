@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [TP_Alquileres_LabIV]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  Database [TP_Alquileres_LabIV]    Script Date: 10/31/2017 5:11:58 PM ******/
 CREATE DATABASE [TP_Alquileres_LabIV]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -75,7 +75,7 @@ ALTER DATABASE [TP_Alquileres_LabIV] SET DELAYED_DURABILITY = DISABLED
 GO
 USE [TP_Alquileres_LabIV]
 GO
-/****** Object:  UserDefinedFunction [dbo].[f_importe_alquiler]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  UserDefinedFunction [dbo].[f_importe_alquiler]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -136,7 +136,29 @@ end
 
 
 GO
-/****** Object:  Table [dbo].[Alquileres]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  UserDefinedFunction [dbo].[fn_calcular_precio_base_por_puesto]    Script Date: 10/31/2017 5:11:58 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE FUNCTION [dbo].[fn_calcular_precio_base_por_puesto] (@mIdPuesto int)
+RETURNS int
+BEGIN
+	DECLARE @mPrecioBase int
+	DECLARE @mPiso int
+	DECLARE @mTieneVentana bit
+	SET @mPrecioBase = 2000
+	SELECT @mPiso = p.piso, @mTieneVentana = p.tiene_ventana
+	FROM Puestos p
+	WHERE p.id_puesto = @mIdPuesto
+	IF (@mPiso BETWEEN 4 AND 5)
+		SET @mPrecioBase += 1000
+	IF (@mTieneVentana = 1)
+		SET @mPrecioBase += 500
+	RETURN @mPrecioBase
+END
+GO
+/****** Object:  Table [dbo].[Alquileres]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -157,7 +179,7 @@ CREATE TABLE [dbo].[Alquileres](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Clientes]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  Table [dbo].[Clientes]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -181,7 +203,7 @@ CREATE TABLE [dbo].[Clientes](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Puestos]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  Table [dbo].[Puestos]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -199,7 +221,7 @@ CREATE TABLE [dbo].[Puestos](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Tipos_documento]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  Table [dbo].[Tipos_documento]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -218,7 +240,7 @@ CREATE TABLE [dbo].[Tipos_documento](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  View [dbo].[vw_listado_clientes]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  View [dbo].[vw_listado_clientes]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -232,7 +254,7 @@ sum(dbo.f_importe_alquiler(a.id_alquiler)) as 'importe total'
 from clientes c join alquileres a on a.id_cliente=c.id_cliente
 group by c.id_cliente, c.documento, c.nombre_cliente, c.apellido_cliente
 GO
-/****** Object:  View [dbo].[vw_listado_completo_puestos]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  View [dbo].[vw_listado_completo_puestos]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -248,7 +270,18 @@ select pu.id_puesto as 'puesto', pu.piso, 'libre' as 'estado'
 from puestos pu left join alquileres al on pu.id_puesto=al.id_puesto
 where al.id_alquiler is null
 GO
-/****** Object:  View [dbo].[vw_total_alquiles_por_piso]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  View [dbo].[vw_listado_de_puestos_disponibles]    Script Date: 10/31/2017 5:11:58 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[vw_listado_de_puestos_disponibles]
+AS
+SELECT p.piso Piso, p.cantidad_sillas [Cantidad de sillas], p.tiene_ventana [Tiene ventana], dbo.fn_calcular_precio_base_por_puesto(p.id_puesto) [Precio base]
+FROM Puestos p 
+WHERE p.disponible = 1
+GO
+/****** Object:  View [dbo].[vw_total_alquiles_por_piso]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -369,7 +402,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [UQ__Clientes__828A56757CD3E65F]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  Index [UQ__Clientes__828A56757CD3E65F]    Script Date: 10/31/2017 5:11:58 PM ******/
 ALTER TABLE [dbo].[Clientes] ADD UNIQUE NONCLUSTERED 
 (
 	[mail_cliente] ASC
@@ -392,7 +425,36 @@ ALTER TABLE [dbo].[Clientes] CHECK CONSTRAINT [fk_tiposDocumento_cliente]
 GO
 ALTER TABLE [dbo].[Puestos]  WITH CHECK ADD CHECK  (([piso]>=(1) AND [piso]<=(5)))
 GO
-/****** Object:  StoredProcedure [dbo].[sp_insert_alquiler]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_detalle_de_cliente]    Script Date: 10/31/2017 5:11:58 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_detalle_de_cliente]
+@mIdCliente int
+AS
+BEGIN
+	SELECT c.apellido_cliente + ', ' + c.nombre_cliente Cliente, td.documento + ' ' + CONVERT(varchar(30),c.documento) Documento, c.mail_cliente Mail, c.telefono Telefono, SUM(dbo.f_importe_alquiler(a.id_alquiler)) [Importe mensual]
+	FROM Clientes c JOIN Tipos_documento td ON td.id_tipo_documento = c.tipo_documento JOIN Alquileres a ON a.id_cliente = c.id_cliente
+	WHERE c.id_cliente = 6--@mIdCliente
+	GROUP BY c.apellido_cliente + ', ' + c.nombre_cliente, td.documento + ' ' + CONVERT(varchar(30),c.documento), c.mail_cliente, c.telefono
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_detalles_de_puestos_alquilados_por_cliente]    Script Date: 10/31/2017 5:11:58 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_detalles_de_puestos_alquilados_por_cliente]
+@mIdCliente int
+AS
+BEGIN
+	SELECT p.piso Piso, p.cantidad_sillas [Cantidad de sillas], p.tiene_ventana [Tiene ventana]
+	FROM Clientes c JOIN Alquileres a ON a.id_cliente = c.id_cliente JOIN Puestos p ON p.id_puesto = a.id_puesto
+	WHERE c.id_cliente = 6--@mIdCliente
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_insert_alquiler]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -410,7 +472,7 @@ BEGIN
 	VALUES (@mIdCliente, @mIdPuesto, @mCantidadComputadoras, @mCantidadSillasAdicionales, @mTieneAccesoSalaReuniones)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_insert_cliente]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_insert_cliente]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -429,7 +491,7 @@ BEGIN
 	VALUES (@mNombreCliente, @mApellidoCliente, @mMailCliente, @mTelefono, @mDocumento, @mTipoDocumento)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_insert_puesto]    Script Date: 10/29/2017 12:05:45 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_insert_puesto]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -445,20 +507,13 @@ BEGIN
 	VALUES (@mPiso, @mCantidadSillas, @mTieneVentana)
 END
 GO
-USE [master]
-GO
-ALTER DATABASE [TP_Alquileres_LabIV] SET  READ_WRITE 
-GO
-
-USE [TP_Alquileres_LabIV]
-GO
-/****** Object:  Trigger [dbo].[tg_actualizar_disponibilidad_puesto]    Script Date: 10/29/2017 12:09:29 PM ******/
+/****** Object:  Trigger [dbo].[tg_actualizar_disponibilidad_puesto]    Script Date: 10/31/2017 5:11:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- TG actualizar puesto en nuevo Alquiler
-ALTER TRIGGER [dbo].[tg_actualizar_disponibilidad_puesto]
+CREATE TRIGGER [dbo].[tg_actualizar_disponibilidad_puesto]
 ON [dbo].[Alquileres]
 AFTER INSERT
 AS
@@ -470,3 +525,8 @@ BEGIN
 	SET disponible = 0
 	WHERE id_puesto = @mIdPuesto
 END
+GO
+USE [master]
+GO
+ALTER DATABASE [TP_Alquileres_LabIV] SET  READ_WRITE 
+GO
