@@ -15,7 +15,7 @@ public class Cliente {
     String Mail_Cliente;
     String Telefono;
     int Documento;
-    int Tipo_Docuento;
+    int Tipo_Documento;
 
     public String getNombre_Cliente() {
         return Nombre_Cliente;
@@ -58,11 +58,11 @@ public class Cliente {
     }
 
     public int getTipo_Docuento() {
-        return Tipo_Docuento;
+        return Tipo_Documento;
     }
 
     public void setTipo_Docuento(int Tipo_Docuento) {
-        this.Tipo_Docuento = Tipo_Docuento;
+        this.Tipo_Documento = Tipo_Docuento;
     }
 
     public Cliente(String Nombre_Cliente, String Apellido_Cliente, String Mail_Cliente, String Telefono, int Documento, int Tipo_Docuento) {
@@ -71,7 +71,7 @@ public class Cliente {
         this.Mail_Cliente = Mail_Cliente;
         this.Telefono = Telefono;
         this.Documento = Documento;
-        this.Tipo_Docuento = Tipo_Docuento;
+        this.Tipo_Documento = Tipo_Docuento;
     }
 
     public Cliente() {

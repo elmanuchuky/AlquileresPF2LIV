@@ -16,7 +16,7 @@ public class Alquileres {
     int id_puesto;
     int cantidad_computadoras;
     int cantidad_sillas_adicionales;
-    int tiene_acceso_sala_reuniones;
+    boolean tiene_acceso_sala_reuniones;
     Date fecha;
     boolean estado;
 
@@ -71,15 +71,15 @@ public class Alquileres {
         this.cantidad_sillas_adicionales = cantidad_sillas_adicionales;
     }
 
-    public int getTiene_acceso_sala_reuniones() {
+    public boolean getTiene_acceso_sala_reuniones() {
         return tiene_acceso_sala_reuniones;
     }
 
-    public void setTiene_acceso_sala_reuniones(int tiene_acceso_sala_reuniones) {
+    public void setTiene_acceso_sala_reuniones(boolean tiene_acceso_sala_reuniones) {
         this.tiene_acceso_sala_reuniones = tiene_acceso_sala_reuniones;
     }
 
-    public Alquileres(int id_cliente, int id_puesto, int cantidad_computadoras, int cantidad_sillas_adicionales, int tiene_acceso_sala_reuniones,Date fecha,boolean estado) {
+    public Alquileres(int id_cliente, int id_puesto, int cantidad_computadoras, int cantidad_sillas_adicionales, boolean tiene_acceso_sala_reuniones,Date fecha,boolean estado) {
         this.id_cliente = id_cliente;
         this.id_puesto = id_puesto;
         this.cantidad_computadoras = cantidad_computadoras;

@@ -10,7 +10,7 @@ package ClassModel;
  * @author Acer
  */
 public class Puesto {
-       int piso;
+    int piso;
     int cantidad_sillas;
     boolean tiene_ventana ;
     boolean disponible;
@@ -26,7 +26,7 @@ public class Puesto {
     public int getCantidad_sillas() {
         return cantidad_sillas;
     }
-
+    
     public void setCantidad_sillas(int cantidad_sillas) {
         this.cantidad_sillas = cantidad_sillas;
     }
@@ -34,7 +34,7 @@ public class Puesto {
     public boolean isTiene_ventana() {
         return tiene_ventana;
     }
-
+   
     public void setTiene_ventana(boolean tiene_ventana) {
         this.tiene_ventana = tiene_ventana;
     }
