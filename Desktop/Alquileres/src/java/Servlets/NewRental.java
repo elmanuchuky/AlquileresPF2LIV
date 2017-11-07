@@ -5,8 +5,13 @@
  */
 package Servlets;
 
+import Controllers.RentalManager;
+import Model.Client;
+import Model.Rental;
+import Model.Stall;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -70,6 +75,31 @@ public class NewRental extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            
+        String Client = request.getParameter("Client");
+        String Stall = request.getParameter("Stall");
+        String ComputersAmount = request.getParameter("ComputerAmount");
+        String extraChairsAmount = request.getParameter("extraChairsAmount");
+        String hasRoomAccess = request.getParameter("hasRoomAccess");
+        String date = request.getParameter("date");
+        String state = request.getParameter("state");
+        
+        
+        Client c = new Client();
+        c.setIdClient(Integer.parseInt(Client));
+        Stall s = new Stall();
+        s.setIdStall(Integer.parseInt(Stall));
+        Rental alqu = new Rental(c,s,Integer.parseInt(ComputersAmount),Integer.parseInt(extraChairsAmount),Boolean.parseBoolean(hasRoomAccess),Date.from(date),Boolean.parseBoolean(state));
+        
+        RentalManager rm = new RentalManager();
+        boolean successful = rm.AddNewRental(alqu);
+         if(successful)
+            getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
+        else
+            response.sendRedirect("error.jsp");
+
+        
+        
         processRequest(request, response);
     }
 
