@@ -15,7 +15,7 @@ public class VmSpDetallePuestosAlquiladosCliente {
     String Cantidad_de_sillas;
     String Tiene_ventana;
     String Tiene_acesso_a_sala_de_reuniones;
-    int Precio_mensual;
+    double Precio_mensual;
     String fecha_de_alquiler;
 
     public int getPiso() {
@@ -58,7 +58,7 @@ public class VmSpDetallePuestosAlquiladosCliente {
         this.Tiene_acesso_a_sala_de_reuniones = Tiene_acesso_a_sala_de_reuniones;
     }
 
-    public int getPrecio_mensual() {
+    public double getPrecio_mensual() {
         return Precio_mensual;
     }
 

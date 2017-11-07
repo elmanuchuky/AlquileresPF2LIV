@@ -10,28 +10,28 @@ package Model;
  * @author Usuario-PC
  */
 public class VMSpDetalleCliente {
-    String Apellido;
-    String Nombre;
-    String Mail;
-    String Telefono;
-    String Tipo_documento;
-    int Documento;
-    int Importe_mensual;
+   
+    
+    String Cliente;
+     String Documento;
+     String Mail;
+     String Telefono;
+     double Importe_mensual;
 
-    public String getApellido() {
-        return Apellido;
+    public String getCliente() {
+        return Cliente;
     }
 
-    public void setApellido(String Apellido) {
-        this.Apellido = Apellido;
+    public void setCliente(String Cliente) {
+        this.Cliente = Cliente;
     }
 
-    public String getNombre() {
-        return Nombre;
+    public String getDocumento() {
+        return Documento;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setDocumento(String Documento) {
+        this.Documento = Documento;
     }
 
     public String getMail() {
@@ -50,23 +50,7 @@ public class VMSpDetalleCliente {
         this.Telefono = Telefono;
     }
 
-    public String getTipo_documento() {
-        return Tipo_documento;
-    }
-
-    public void setTipo_documento(String Tipo_documento) {
-        this.Tipo_documento = Tipo_documento;
-    }
-
-    public int getDocumento() {
-        return Documento;
-    }
-
-    public void setDocumento(int Documento) {
-        this.Documento = Documento;
-    }
-
-    public int getImporte_mensual() {
+    public double getImporte_mensual() {
         return Importe_mensual;
     }
 
@@ -77,19 +61,15 @@ public class VMSpDetalleCliente {
     public VMSpDetalleCliente() {
     }
 
-    public VMSpDetalleCliente(String Apellido, String Nombre, String Mail, String Telefono, String Tipo_documento, int Documento, int Importe_mensual) {
-        this.Apellido = Apellido;
-        this.Nombre = Nombre;
+    public VMSpDetalleCliente(String Cliente, String Documento, String Mail, String Telefono, int Importe_mensual) {
+        this.Cliente = Cliente;
+        this.Documento = Documento;
         this.Mail = Mail;
         this.Telefono = Telefono;
-        this.Tipo_documento = Tipo_documento;
-        this.Documento = Documento;
         this.Importe_mensual = Importe_mensual;
     }
 
-    @Override
-    public String toString() {
-        return "VMSpDetalleCliente{" + "Apellido=" + Apellido + ", Nombre=" + Nombre + ", Mail=" + Mail + ", Telefono=" + Telefono + ", Tipo_documento=" + Tipo_documento + ", Documento=" + Documento + ", Importe_mensual=" + Importe_mensual + '}';
-    }
+    
+   
     
     }
