@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import Controllers.DataAccess;
+import Model.Client;
+import Model.Stall;
 import Model.VMSpDatosPuestosAlquilados;
 import Model.VmSpDetallePuestosAlquiladosCliente;
 import java.sql.Date;
@@ -94,6 +96,40 @@ public class RentalManager {
             Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s;
+    }/*
+       int idRental;
+    Client client;
+    Stall stall;
+    int computersAmount;
+    int extraChairsAmount;
+    boolean hasRoomAccess;
+    String date;
+    boolean state;
+     */
+     public ArrayList<Rental> GetRental(){
+        ArrayList<Rental> r = new ArrayList<Rental>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("SELECT * FROM Alquileres ");
+            while (query.next()) {
+                Client c = new Client();
+                Stall s = new Stall();
+                Rental re = new Rental();
+                re.setIdRental(query.getInt("idRental"));
+                re.setClient(query.("Cliente"));
+                vm.setTiene_ventana(query.getString("Tiene ventana"));
+                vm.setTiene_acesso_a_sala_de_reuniones(query.getString("Tiene acesso sala reuniones"));
+                vm.setPrecio_mensual(query.getDouble("Precio mensual"));
+                vm.setFecha_de_alquiler(query.getString("Fecha de alquiler"));
+                r.add(re);
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return r;
     }
      
     public void ModifyRental(Rental rental) throws SQLException {
