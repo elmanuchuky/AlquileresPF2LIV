@@ -18,13 +18,13 @@ public class Rental {
     int computersAmount;
     int extraChairsAmount;
     boolean hasRoomAccess;
-    Date date;
+    String date;
     boolean state;
 
     public Rental() {
     }
 
-    public Rental(Client client, Stall stall, int computersAmount, int extraChairsAmount, boolean hasRoomAccess, Date date, boolean state) {
+    public Rental(Client client, Stall stall, int computersAmount, int extraChairsAmount, boolean hasRoomAccess, String date, boolean state) {
         this.client = client;
         this.stall = stall;
         this.computersAmount = computersAmount;
@@ -82,11 +82,11 @@ public class Rental {
         this.hasRoomAccess = hasRoomAccess;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

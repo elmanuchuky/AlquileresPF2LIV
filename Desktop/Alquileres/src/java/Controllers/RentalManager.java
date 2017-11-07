@@ -35,7 +35,8 @@ public class RentalManager {
         }
     }
     
-     public void AddNewRental(Rental rental){
+     public boolean AddNewRental(Rental rental){
+        boolean isSuccessful = true;
         try {
             PreparedStatement stmt = conn.prepareStatement("EXEC sp_insert_alquiler ?, ?, ?, ?, ?");
             stmt.setInt(1, rental.getClient().getIdClient());
@@ -48,9 +49,12 @@ public class RentalManager {
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(RentalManager.class.getName()).log(Level.SEVERE, null, ex);
+            isSuccessful = false;
         }
+        return isSuccessful;
     }
-      public void ModifyRental(Rental rental) throws SQLException {
+     
+    public void ModifyRental(Rental rental) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("EXEC sp_update_alquiler ?, ?, ?");
         stmt.setInt(1, rental.getComputersAmount());
         stmt.setInt(2, rental.getExtraChairsAmount());
