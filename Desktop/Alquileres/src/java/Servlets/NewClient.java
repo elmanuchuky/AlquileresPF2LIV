@@ -5,6 +5,8 @@
  */
 package Servlets;
 
+import Controllers.ClientManager;
+import Model.Client;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,7 +34,7 @@ public class NewClient extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            String name = request.getParameter("Name");
+          
             
             
             /* TODO output your page here. You may use following sample code. */
@@ -75,6 +77,21 @@ public class NewClient extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        String clientName = request.getParameter("clientName");
+         String clientSurename = request.getParameter("clientSurename");
+         String clientMail = request.getParameter("clientMail");
+         String clientPhone = request.getParameter("clientPhone");
+         String clientDocument = request.getParameter("clientDocument");
+         String clientDocumentType = request.getParameter("clientDocumentType");
+         
+          Client client = new Client(clientName, clientSurename,clientMail, clientPhone,  Integer.parseInt(clientDocument) , Integer.parseInt(clientDocumentType));
+          ClientManager cm = new ClientManager();
+          boolean successful = cm.AddNewClient(client);
+          
+           if(successful)
+            getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
+        else
+            response.sendRedirect("error.jsp");
     }
 
     /**
