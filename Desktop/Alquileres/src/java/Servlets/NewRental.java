@@ -76,30 +76,26 @@ public class NewRental extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             
-        String Client = request.getParameter("Client");
-        String Stall = request.getParameter("Stall");
-        String ComputersAmount = request.getParameter("ComputerAmount");
+        String client = request.getParameter("Client");
+        String stall = request.getParameter("Stall");
+        String computersAmount = request.getParameter("ComputerAmount");
         String extraChairsAmount = request.getParameter("extraChairsAmount");
         String hasRoomAccess = request.getParameter("hasRoomAccess");
         String date = request.getParameter("date");
         String state = request.getParameter("state");
         
-        
         Client c = new Client();
-        c.setIdClient(Integer.parseInt(Client));
+        c.setIdClient(Integer.parseInt(client));
         Stall s = new Stall();
-        s.setIdStall(Integer.parseInt(Stall));
-        Rental alqu = new Rental(c,s,Integer.parseInt(ComputersAmount),Integer.parseInt(extraChairsAmount),Boolean.parseBoolean(hasRoomAccess),Date.from(date),Boolean.parseBoolean(state));
+        s.setIdStall(Integer.parseInt(stall));
+        Rental rental = new Rental(c, s, Integer.parseInt(computersAmount), Integer.parseInt(extraChairsAmount), Boolean.parseBoolean(hasRoomAccess), date, Boolean.parseBoolean(state));
         
         RentalManager rm = new RentalManager();
-        boolean successful = rm.AddNewRental(alqu);
+        boolean successful = rm.AddNewRental(rental);
          if(successful)
             getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
         else
-            response.sendRedirect("error.jsp");
-
-        
-        
+            response.sendRedirect("error.jsp");      
         processRequest(request, response);
     }
 

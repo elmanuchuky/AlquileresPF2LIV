@@ -23,7 +23,7 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"></jsp:include>
-        <form action="GestorVentas" method="POST">
+        <form action="NewClient" method="POST">
             <p>
                 <label>Nombre:</label><input type="text" name="clientName" />
             </p>
