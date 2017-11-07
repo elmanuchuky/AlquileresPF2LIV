@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import Controllers.DataAccess;
+import Model.VmSpDetallePuestosAlquiladosCliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -55,7 +56,31 @@ public class StallManager {
         }
         return isSuccessful;
     }
-   
+   /*
+    exec sp_detalles_de_puestos_alquilados_por_cliente 1 -- 
+    VMSPDetallePuestosAlquiladosCliente DEVUELVE ARRAYLIST DE VM
+    */
+     public ArrayList<VmSpDetallePuestosAlquiladosCliente> GetStallPerClient(){
+        ArrayList<VmSpDetallePuestosAlquiladosCliente> stalls = new ArrayList<VmSpDetallePuestosAlquiladosCliente>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("sp_detalles_de_puestos_alquilados_por_cliente ");
+            while (query.next()) {
+               VmSpDetallePuestosAlquiladosCliente vm = new VmSpDetallePuestosAlquiladosCliente();
+                vm.setPiso(query.getInt("Piso"));
+                vm.setCantidad_de_sillas(query.getInt("Cantidad sillas"));
+                vm.setTiene_ventana(query.getInt("Tiene ventana"));
+                
+                stalls.add(vm);
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return stalls;
+    }
       public ArrayList<Stall> GetStalls(){
         ArrayList<Stall> stalls = new ArrayList<Stall>();
         try {
