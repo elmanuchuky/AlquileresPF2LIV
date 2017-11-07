@@ -60,17 +60,16 @@ public class StallManager {
     exec sp_detalles_de_puestos_alquilados_por_cliente 1 -- 
     VMSPDetallePuestosAlquiladosCliente DEVUELVE ARRAYLIST DE VM
     */
-     public ArrayList<VmSpDetallePuestosAlquiladosCliente> GetStallPerClient(){
+     public ArrayList<VmSpDetallePuestosAlquiladosCliente> GetStallPerClient(int idClient){
         ArrayList<VmSpDetallePuestosAlquiladosCliente> stalls = new ArrayList<VmSpDetallePuestosAlquiladosCliente>();
         try {
             Statement stmt = conn.createStatement();
-            ResultSet query = stmt.executeQuery("sp_detalles_de_puestos_alquilados_por_cliente ");
+            ResultSet query = stmt.executeQuery("sp_detalles_de_puestos_alquilados_por_cliente " + idClient);
             while (query.next()) {
-               VmSpDetallePuestosAlquiladosCliente vm = new VmSpDetallePuestosAlquiladosCliente();
+                VmSpDetallePuestosAlquiladosCliente vm = new VmSpDetallePuestosAlquiladosCliente();
                 vm.setPiso(query.getInt("Piso"));
                 vm.setCantidad_de_sillas(query.getInt("Cantidad sillas"));
                 vm.setTiene_ventana(query.getInt("Tiene ventana"));
-                
                 stalls.add(vm);
             }
             query.close();
@@ -81,7 +80,8 @@ public class StallManager {
         }
         return stalls;
     }
-      public ArrayList<Stall> GetStalls(){
+     
+    public ArrayList<Stall> GetStalls(){
         ArrayList<Stall> stalls = new ArrayList<Stall>();
         try {
             Statement stmt = conn.createStatement();
