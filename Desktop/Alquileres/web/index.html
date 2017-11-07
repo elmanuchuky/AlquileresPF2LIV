@@ -6,16 +6,33 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Alquileres</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div>TODO write content</div>
-        <form action="NewClient" method="post" >
-            <input type="text" name="name" id="name"/>
-            <input type="Submit" name="save" id="save" value="save"/>
-            
-        </form>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">Alquileres</a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li><a href="rental.jsp">Registro de Alquileres</a></li>
+                <li><a href="rentalAlter.jsp">Editar Alquileres</a></li>
+                <li><a href="stall.jsp">Registro de Puestos</a></li>
+                <li><a href="client.jsp">Registro de Clientes</a></li>
+              </ul>
+            </div>
+          </nav>
+        <h1>Bienvenido al sitio de Alquileres</h1>
     </body>
 </html>
