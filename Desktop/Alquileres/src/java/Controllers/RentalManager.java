@@ -106,7 +106,7 @@ public class RentalManager {
     String date;
     boolean state;
      */
-     public ArrayList<Rental> GetRental(){
+   /*  public ArrayList<Rental> GetRental(){
         ArrayList<Rental> r = new ArrayList<Rental>();
         try {
             Statement stmt = conn.createStatement();
@@ -114,7 +114,12 @@ public class RentalManager {
             while (query.next()) {
                 Client c = new Client();
                 Stall s = new Stall();
+                ClientManager cm = new ClientManager();
+                StallManager sm = new StallManager();
                 Rental re = new Rental();
+                int id_cliente = query.getInt("id_cliente");
+              
+                
                 re.setIdRental(query.getInt("idRental"));
                 re.setClient(query.("Cliente"));
                 vm.setTiene_ventana(query.getString("Tiene ventana"));
@@ -131,6 +136,7 @@ public class RentalManager {
         }
         return r;
     }
+*/
      
     public void ModifyRental(Rental rental) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("EXEC sp_update_alquiler ?, ?, ?");

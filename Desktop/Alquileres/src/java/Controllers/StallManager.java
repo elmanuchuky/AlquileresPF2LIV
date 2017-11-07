@@ -102,6 +102,10 @@ public class StallManager {
         }
         return stalls;
     }
-
+/*exec sp_total_recaudado_por_piso 1 -- no es un VM, 
+es un metodo del gestor solamente DEVUELVE UN DOUBLE
+*/
+    
+    
 }
 
