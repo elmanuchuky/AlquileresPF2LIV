@@ -78,17 +78,17 @@ public class NewClient extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         String clientName = request.getParameter("clientName");
-         String clientSurename = request.getParameter("clientSurename");
-         String clientMail = request.getParameter("clientMail");
-         String clientPhone = request.getParameter("clientPhone");
-         String clientDocument = request.getParameter("clientDocument");
-         String clientDocumentType = request.getParameter("clientDocumentType");
+        String clientSurename = request.getParameter("clientSurename");
+        String clientMail = request.getParameter("clientMail");
+        String clientPhone = request.getParameter("clientPhone");
+        String clientDocument = request.getParameter("clientDocument");
+        String clientDocumentType = request.getParameter("clientDocumentType");
          
-          Client client = new Client(clientName, clientSurename,clientMail, clientPhone,  Integer.parseInt(clientDocument) , Integer.parseInt(clientDocumentType));
-          ClientManager cm = new ClientManager();
-          boolean successful = cm.AddNewClient(client);
+        Client client = new Client(clientName, clientSurename,clientMail, clientPhone,  Integer.parseInt(clientDocument) , Integer.parseInt(clientDocumentType));
+        ClientManager cm = new ClientManager();
+        boolean successful = cm.AddNewClient(client);
           
-           if(successful)
+        if(successful)
             getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
         else
             response.sendRedirect("error.jsp");
