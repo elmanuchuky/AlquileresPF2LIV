@@ -11,7 +11,7 @@ package Model;
  */
 public class VMSpDatosPuestosAlquilados {
     
-   int Piso;
+    int Piso;
     int Cantidad_de_computadoras;
     String Cantidad_de_sillas;
     String Tiene_ventana;
@@ -63,7 +63,7 @@ public class VMSpDatosPuestosAlquilados {
         return Precio_mensual;
     }
 
-    public void setPrecio_mensual(int Precio_mensual) {
+    public void setPrecio_mensual(double Precio_mensual) {
         this.Precio_mensual = Precio_mensual;
     }
 

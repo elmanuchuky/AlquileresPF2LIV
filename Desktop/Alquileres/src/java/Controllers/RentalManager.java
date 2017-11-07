@@ -9,8 +9,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import Controllers.DataAccess;
+import Model.VMSpDatosPuestosAlquilados;
+import Model.VmSpDetallePuestosAlquiladosCliente;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,6 +57,43 @@ public class RentalManager {
             isSuccessful = false;
         }
         return isSuccessful;
+    }
+     /*
+     exec sp_mostrar_datos_puestos_alquilados_por_cliente 1 -- 
+     VMSPDatosPuestosAlquilados DEVUELVE ARRAYLIST DE VM
+     */
+     /*
+      int Piso;
+    int Cantidad_de_computadoras;
+    String Cantidad_de_sillas;
+    String Tiene_ventana;
+    String Tiene_acesso_a_sala_de_reuniones;
+    double Precio_mensual;
+    String fecha_de_alquiler;
+     */
+     public ArrayList<VMSpDatosPuestosAlquilados> GetStallPerRental(int idClient){
+        ArrayList<VMSpDatosPuestosAlquilados> s = new ArrayList<VMSpDatosPuestosAlquilados>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("sp_mostrar_datos_puestos_alquilados_por_cliente " + idClient);
+            while (query.next()) {
+                VMSpDatosPuestosAlquilados vm = new VMSpDatosPuestosAlquilados();
+                vm.setPiso(query.getInt("Piso"));
+                vm.setCantidad_de_computadoras(query.getInt("Cantidad de computadoras"));
+                vm.setCantidad_de_sillas(query.getString("Cantidad sillas"));
+                vm.setTiene_ventana(query.getString("Tiene ventana"));
+                vm.setTiene_acesso_a_sala_de_reuniones(query.getString("Tiene acesso sala reuniones"));
+                vm.setPrecio_mensual(query.getDouble("Precio mensual"));
+                vm.setFecha_de_alquiler(query.getString("Fecha de alquiler"));
+                s.add(vm);
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
     }
      
     public void ModifyRental(Rental rental) throws SQLException {
