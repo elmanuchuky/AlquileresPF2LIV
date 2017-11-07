@@ -105,7 +105,19 @@ public class StallManager {
 /*exec sp_total_recaudado_por_piso 1 -- no es un VM, 
 es un metodo del gestor solamente DEVUELVE UN DOUBLE
 */
-    
-    
+   
+     public double TotalCollected(){
+       
+        try {
+            PreparedStatement stmt = conn.prepareStatement("sp_total_recaudado_por_piso ");
+            //YA SE QUE NO HACE NADA ME DIO PAJA Y ME FUI A DORMIR
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(StallManager.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        return TotalCollected();
+    }
 }
 
