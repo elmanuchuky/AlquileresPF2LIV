@@ -76,19 +76,21 @@ public class NewRental extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             
-        String client = request.getParameter("Client");
-        String stall = request.getParameter("Stall");
-        String computersAmount = request.getParameter("ComputerAmount");
+        String client = request.getParameter("client");
+        String stall = request.getParameter("stall");
+        String computersAmount = request.getParameter("computersAmount");
         String extraChairsAmount = request.getParameter("extraChairsAmount");
         String hasRoomAccess = request.getParameter("hasRoomAccess");
-        String date = request.getParameter("date");
-        String state = request.getParameter("state");
         
+        boolean hasRoomAccessB = true;
+        if (hasRoomAccess == null)
+            hasRoomAccessB = false;
+
         Client c = new Client();
         c.setIdClient(Integer.parseInt(client));
         Stall s = new Stall();
         s.setIdStall(Integer.parseInt(stall));
-        Rental rental = new Rental(c, s, Integer.parseInt(computersAmount), Integer.parseInt(extraChairsAmount), Boolean.parseBoolean(hasRoomAccess), date, Boolean.parseBoolean(state));
+        Rental rental = new Rental(c, s, Integer.parseInt(computersAmount), Integer.parseInt(extraChairsAmount), hasRoomAccessB);
         
         RentalManager rm = new RentalManager();
         boolean successful = rm.AddNewRental(rental);

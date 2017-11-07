@@ -33,6 +33,14 @@ public class Rental {
         this.date = date;
         this.state = state;
     }
+    
+    public Rental(Client client, Stall stall, int computersAmount, int extraChairsAmount, boolean hasRoomAccess) {
+        this.client = client;
+        this.stall = stall;
+        this.computersAmount = computersAmount;
+        this.extraChairsAmount = extraChairsAmount;
+        this.hasRoomAccess = hasRoomAccess;
+    }
 
     public int getIdRental() {
         return idRental;
