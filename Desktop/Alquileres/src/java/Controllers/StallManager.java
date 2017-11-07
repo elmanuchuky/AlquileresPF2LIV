@@ -36,7 +36,8 @@ public class StallManager {
     }
     
     
-    public void AddNewStall(Stall stall){
+    public boolean AddNewStall(Stall stall){
+        boolean isSuccessful = true;
         try {
             PreparedStatement stmt = conn.prepareStatement("EXEC sp_insert_puesto ?, ?, ?");
             stmt.setInt(1, stall.getFloor());
@@ -47,7 +48,9 @@ public class StallManager {
             conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(StallManager.class.getName()).log(Level.SEVERE, null, ex);
+            isSuccessful = false;
         }
+        return isSuccessful;
     }
 
 }
