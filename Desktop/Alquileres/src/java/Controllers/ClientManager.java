@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import Controllers.DataAccess;
 import Model.VMSpDatosCliente;
+import Model.VMSpDetalleCliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -82,7 +83,36 @@ public class ClientManager {
         }
         return clients;
     }
+    //exec sp_detalle_de_cliente 1 -- VMSPDetalleCliente DEVUELVE VM
     
+    /*
+     String Cliente;
+     String Documento;
+     String Mail;
+     String Telefono;
+     double Importe_mensual;
+    */
+     public VMSpDetalleCliente GetClientDataImport(int idClient){
+        VMSpDetalleCliente clientD = new VMSpDetalleCliente();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("EXEC sp_detalle_de_cliente " + idClient);
+            if (query.next()) {
+                clientD.setCliente(query.getString("Cliente"));
+                clientD.setDocumento(query.getString("Documento"));
+                clientD.setMail(query.getString("Mail"));
+                clientD.setTelefono(query.getString("Telefono"));
+                clientD.setImporte_mensual(query.getDouble("Importe Mensual"));
+               
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clientD;
+    }
     //
     public VMSpDatosCliente GetClientData(int idClient){
         VMSpDatosCliente clientData = new VMSpDatosCliente();
