@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import Controllers.DataAccess;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,6 +54,28 @@ public class StallManager {
             isSuccessful = false;
         }
         return isSuccessful;
+    }
+   
+      public ArrayList<Stall> GetStalls(){
+        ArrayList<Stall> stalls = new ArrayList<Stall>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("SELECT s.id_puesto id, s.piso piso, s.Cantidad_sillas sillas, s.tiene_ventana ventana, s.disponible disponible  FROM Puestos s");
+            while (query.next()) {
+                Stall s = new Stall();
+                s.setFloor(query.getInt("Piso"));
+                s.setChairsAmount(query.getInt("Cantidad sillas"));
+                s.setWithWindows(query.getBoolean("Tiene ventana"));
+                s.setAvailable(query.getBoolean("Disponible"));
+                stalls.add(s);
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return stalls;
     }
 
 }
