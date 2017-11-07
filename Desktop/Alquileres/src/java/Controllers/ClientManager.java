@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import Controllers.DataAccess;
+import Model.VMSpDatosCliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -82,4 +83,27 @@ public class ClientManager {
         return clients;
     }
     
+    //
+    public VMSpDatosCliente GetClientData(int idClient){
+        VMSpDatosCliente clientData = new VMSpDatosCliente();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("EXEC sp_mostrar_datos_cliente_por_cliente " + idClient);
+            if (query.next()) {
+                clientData.setApellido(query.getString("Apellido"));
+                clientData.setNombre(query.getString("Nombre"));
+                clientData.setMail(query.getString("Mail"));
+                clientData.setTelefono(query.getString("Telefono"));
+                clientData.setTipo_documento(query.getString("Tipo documento"));
+                clientData.setDocumento(query.getInt("Documento"));
+                clientData.setImporte_mensual(query.getDouble("Importe Mensual"));
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clientData;
+    }
 }
