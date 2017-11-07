@@ -54,7 +54,7 @@ public class VMSpDetalleCliente {
         return Importe_mensual;
     }
 
-    public void setImporte_mensual(int Importe_mensual) {
+    public void setImporte_mensual(double Importe_mensual) {
         this.Importe_mensual = Importe_mensual;
     }
 
