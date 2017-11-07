@@ -71,7 +71,7 @@ public class RentalManager {
     double Precio_mensual;
     String fecha_de_alquiler;
      */
-     public ArrayList<VMSpDatosPuestosAlquilados> GetStallPerRental(int idClient){
+     public ArrayList<VMSpDatosPuestosAlquilados> GetStallsPerRental(int idClient){
         ArrayList<VMSpDatosPuestosAlquilados> s = new ArrayList<VMSpDatosPuestosAlquilados>();
         try {
             Statement stmt = conn.createStatement();
@@ -81,8 +81,8 @@ public class RentalManager {
                 vm.setPiso(query.getInt("Piso"));
                 vm.setCantidad_de_computadoras(query.getInt("Cantidad de computadoras"));
                 vm.setCantidad_de_sillas(query.getString("Cantidad sillas"));
-                vm.setTiene_ventana(query.getString("Tiene ventana"));
-                vm.setTiene_acesso_a_sala_de_reuniones(query.getString("Tiene acesso sala reuniones"));
+                vm.setTiene_ventana(query.getString("Tiene ventana?"));
+                vm.setTiene_acesso_a_sala_de_reuniones(query.getString("Tiene acesso a sala de reuniones?"));
                 vm.setPrecio_mensual(query.getDouble("Precio mensual"));
                 vm.setFecha_de_alquiler(query.getString("Fecha de alquiler"));
                 s.add(vm);
