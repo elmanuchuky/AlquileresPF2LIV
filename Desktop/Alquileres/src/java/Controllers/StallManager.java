@@ -134,11 +134,16 @@ es un metodo del gestor solamente DEVUELVE UN DOUBLE
      public double TotalCollected(){
        
         try {
-            PreparedStatement stmt = conn.prepareStatement("sp_total_recaudado_por_piso ");
-            //YA SE QUE NO HACE NADA ME DIO PAJA Y ME FUI A DORMIR
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("SELECT * FROM vw_total_recaudado_por_piso ");
+            while (query.next()) {
+               Stall s = new Stall();
+               s.setFloor(query.getInt("piso"));
+            }
+            query.close();
             stmt.close();
-            conn.close();
-        } catch (SQLException ex) {
+            conn.close(); 
+       } catch (SQLException ex) {
             Logger.getLogger(StallManager.class.getName()).log(Level.SEVERE, null, ex);
             
         }
