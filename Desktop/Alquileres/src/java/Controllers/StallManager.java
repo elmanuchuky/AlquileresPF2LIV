@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import Controllers.DataAccess;
 import Model.Client;
 import Model.VMAvailableStalls;
+import Model.VMVwTotalPorPiso;
 import Model.VmSpDetallePuestosAlquiladosCliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,7 +63,7 @@ public class StallManager {
     exec sp_detalles_de_puestos_alquilados_por_cliente 1 -- 
     VMSPDetallePuestosAlquiladosCliente DEVUELVE ARRAYLIST DE VM
     */
-    public ArrayList<VmSpDetallePuestosAlquiladosCliente> GetStallPerClient(int idClient){
+    public ArrayList<VmSpDetallePuestosAlquiladosCliente> GetStallsPerClient(int idClient){
         ArrayList<VmSpDetallePuestosAlquiladosCliente> stalls = new ArrayList<VmSpDetallePuestosAlquiladosCliente>();
         try {
             Statement stmt = conn.createStatement();
@@ -113,6 +114,7 @@ public class StallManager {
             ResultSet query = stmt.executeQuery("SELECT s.id_puesto id, s.piso piso, s.Cantidad_sillas sillas, s.tiene_ventana ventana, s.disponible disponible  FROM Puestos s");
             while (query.next()) {
                 Stall s = new Stall();
+                s.setIdStall(query.getInt("id"));
                 s.setFloor(query.getInt("piso"));
                 s.setChairsAmount(query.getInt("sillas"));
                 s.setWithWindows(query.getBoolean("ventana"));
@@ -131,24 +133,24 @@ public class StallManager {
 es un metodo del gestor solamente DEVUELVE UN DOUBLE
 */
    
-     public double TotalCollected(){
-       
+    public ArrayList<VMVwTotalPorPiso> TotalCollected(){
+        ArrayList<VMVwTotalPorPiso> floors = new ArrayList<VMVwTotalPorPiso>();
         try {
             Statement stmt = conn.createStatement();
-            ResultSet query = stmt.executeQuery("SELECT * FROM vw_total_recaudado_por_piso ");
+            ResultSet query = stmt.executeQuery("SELECT * FROM vw_total_alquiles_por_piso");
             while (query.next()) {
-               Stall s = new Stall();
-               s.setFloor(query.getInt("piso"));
+               VMVwTotalPorPiso tpp = new VMVwTotalPorPiso();
+               tpp.setFloor(query.getInt("piso"));
+               tpp.setTotal(query.getDouble("total recaudado"));
+               floors.add(tpp);
             }
             query.close();
             stmt.close();
             conn.close(); 
-       } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(StallManager.class.getName()).log(Level.SEVERE, null, ex);
-            
         }
-        // falta una parte todavia
-        return TotalCollected();
+        return floors;
     }
 
     public Stall GetStall(int idStall) {

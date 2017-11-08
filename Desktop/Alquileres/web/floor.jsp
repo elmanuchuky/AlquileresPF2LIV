@@ -1,6 +1,6 @@
 <%-- 
-    Document   : test
-    Created on : Nov 7, 2017, 7:38:23 PM
+    Document   : floor
+    Created on : Nov 8, 2017, 2:27:25 AM
     Author     : Fernando M. de Lima
 --%>
 
@@ -10,8 +10,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    ClientManager con = new ClientManager();
-    ArrayList clientsList = con.GetClientsWhoRent();
+    StallManager con = new StallManager();
+    ArrayList floors = con.TotalCollected();
     %>
     
 <!DOCTYPE html>
@@ -26,18 +26,14 @@
         
         <table border="1" class="table table-striped table-hover table-dark">
             <tr>
-                <th>Apellido</th><th>Nombre</th><th>Documento</th><th>Cantidad de Puestos</th><th>Importe Total</th><th>Detalle</th>
+                <th>Piso</th><th>Total Recaudado</th>
             </tr>
-            <% for (Object client : clientsList) {
-                    VMVwListadoClientes c = (VMVwListadoClientes) client;
+            <% for (Object floor : floors) {
+                    VMVwTotalPorPiso f = (VMVwTotalPorPiso) floor;
             %>
             <tr>
-                <td><%= c.getSureName() %></td>
-                <td><%= c.getName() %></td>
-                <td><%= c.getDocument() %></td>
-                <td><%= c.getStalls() %></td>
-                <td>$<%= c.getTotal() %></td>
-                <td><a href="#">Ver</a></td>
+                <td><%= f.getFloor() %></td>
+                <td>$<%= f.getTotal() %></td>
             </tr>
             <% } %>
         </table>
