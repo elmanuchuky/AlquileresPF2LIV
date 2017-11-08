@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import Controllers.DataAccess;
 import Model.VMSpDatosCliente;
 import Model.VMSpDetalleCliente;
+import Model.VMVwListadoClientes;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -57,6 +58,30 @@ public class ClientManager {
             isSuccessful = false;
         }
         return isSuccessful;
+    }
+    
+    public ArrayList<VMVwListadoClientes> GetClientsWhoRent(){
+        ArrayList<VMVwListadoClientes> clients = new ArrayList<VMVwListadoClientes>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("SELECT * FROM vw_listado_clientes");
+            while (query.next()) {
+                VMVwListadoClientes c = new VMVwListadoClientes();
+                c.setId(query.getInt("id_cliente"));
+                c.setDocument(query.getInt("documento"));
+                c.setName(query.getString("nombre_cliente"));
+                c.setSureName(query.getString("apellido_cliente"));
+                c.setStalls(query.getInt("total de puestos"));
+                c.setTotal(query.getDouble("importe total"));
+                clients.add(c);
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clients;
     }
     
     public ArrayList<Client> GetClients(){

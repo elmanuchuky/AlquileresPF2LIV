@@ -1,4 +1,10 @@
 <%-- 
+    Document   : rentalsList
+    Created on : Nov 7, 2017, 10:58:18 PM
+    Author     : Fernando M. de Lima
+--%>
+
+<%-- 
     Document   : test
     Created on : Nov 7, 2017, 7:38:23 PM
     Author     : Fernando M. de Lima
@@ -37,6 +43,8 @@
                 <td><%= c.getDocument() %></td>
                 <td><%= c.getStalls() %></td>
                 <td>$<%= c.getTotal() %></td>
+
+                <td><a href="/Editar/id=<%= c.getId() %>">Modificar</a></td>
             </tr>
             <% } %>
         </table>
