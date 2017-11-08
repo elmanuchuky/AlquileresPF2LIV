@@ -13,7 +13,7 @@
     ClientManager con = new ClientManager();
     StallManager co = new StallManager();
     ArrayList clients = con.GetClients();
-    ArrayList stalls = con.GetStalls();
+    ArrayList stalls = co.GetAvailableStalls();
     %>
 
 <!DOCTYPE html>
@@ -25,24 +25,23 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"></jsp:include>
-        <form action="NewClient" method="POST">
-    boolean state;
+        <form action="NewRental" method="POST">
                 <label>Cliente:</label><select name="client">
                 <% 
-                for(Object type : clients)
+                for(Object client : clients)
                 {
-                    Client c = (Client)type;
+                    Client c = (Client)client;
                 %>
-                <option value="<%= c.getClientSurename() + ", " + c.getClientName()%>"><%= c.getDocumentType()%></option>
+                <option value="<%= c.getIdClient() %>"><%= c.getClientSurename() + ", " + c.getClientName()%></option>
                 <% } %>
             </select>
                 <label>Puesto:</label><select name="stall">
                 <% 
                 for(Object type : stalls)
                 {
-                    Stall s = (Stall)type;
+                    VMAvailableStalls s = (VMAvailableStalls)type;
                 %>
-                <option value="<%= s.getIdStall()%>"><%= s.toString() %></option>
+                <option value="<%= s.getId()%>"><%= s.toString() %></option>
                 <% } %>
             </select>
             <p>

@@ -103,7 +103,6 @@ public class ClientManager {
                 clientD.setMail(query.getString("Mail"));
                 clientD.setTelefono(query.getString("Telefono"));
                 clientD.setImporte_mensual(query.getDouble("Importe Mensual"));
-               
             }
             query.close();
             stmt.close();
@@ -135,5 +134,28 @@ public class ClientManager {
             Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return clientData;
+    }
+
+    Client GetClient(int idClient) {
+        Client c = new Client();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("SELECT * FROM Clientes WHERE id_cliente = " + idClient);
+            if (query.next()) {
+                c.setIdClient(query.getInt("id_cliente"));
+                c.setClientName(query.getString("nombre_cliente"));
+                c.setClientSurename(query.getString("apellido_cliente"));
+                c.setClientMail(query.getString("mail_cliente"));
+                c.setPhone(query.getString("telefono"));
+                c.setDocument(query.getInt("documento"));
+                c.setDocumentType(query.getInt("tipo_documento"));
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c;
     }
 }

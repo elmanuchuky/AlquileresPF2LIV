@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import Controllers.DataAccess;
+import Model.Client;
+import Model.VMAvailableStalls;
 import Model.VmSpDetallePuestosAlquiladosCliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -60,7 +62,7 @@ public class StallManager {
     exec sp_detalles_de_puestos_alquilados_por_cliente 1 -- 
     VMSPDetallePuestosAlquiladosCliente DEVUELVE ARRAYLIST DE VM
     */
-     public ArrayList<VmSpDetallePuestosAlquiladosCliente> GetStallPerClient(int idClient){
+    public ArrayList<VmSpDetallePuestosAlquiladosCliente> GetStallPerClient(int idClient){
         ArrayList<VmSpDetallePuestosAlquiladosCliente> stalls = new ArrayList<VmSpDetallePuestosAlquiladosCliente>();
         try {
             Statement stmt = conn.createStatement();
@@ -80,7 +82,30 @@ public class StallManager {
         }
         return stalls;
     }
-     
+    //SELECT * FROM vw_listado_de_puestos_disponibles
+    public ArrayList<VMAvailableStalls> GetAvailableStalls(){
+        ArrayList<VMAvailableStalls> stalls = new ArrayList<VMAvailableStalls>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("SELECT * FROM vw_listado_de_puestos_disponibles");
+            while (query.next()) {
+                VMAvailableStalls s = new VMAvailableStalls();
+                s.setId(query.getInt("Id"));
+                s.setFloor(query.getInt("Piso"));
+                s.setChairsAmount(query.getInt("Cantidad de sillas"));
+                s.setWithWindows(query.getBoolean("Tiene Ventana"));
+                s.setBasePrice(query.getDouble("Precio Base"));
+                stalls.add(s);
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return stalls;
+    }
+    
     public ArrayList<Stall> GetStalls(){
         ArrayList<Stall> stalls = new ArrayList<Stall>();
         try {
@@ -88,10 +113,10 @@ public class StallManager {
             ResultSet query = stmt.executeQuery("SELECT s.id_puesto id, s.piso piso, s.Cantidad_sillas sillas, s.tiene_ventana ventana, s.disponible disponible  FROM Puestos s");
             while (query.next()) {
                 Stall s = new Stall();
-                s.setFloor(query.getInt("Piso"));
-                s.setChairsAmount(query.getInt("Cantidad sillas"));
-                s.setWithWindows(query.getBoolean("Tiene ventana"));
-                s.setAvailable(query.getBoolean("Disponible"));
+                s.setFloor(query.getInt("piso"));
+                s.setChairsAmount(query.getInt("sillas"));
+                s.setWithWindows(query.getBoolean("ventana"));
+                s.setAvailable(query.getBoolean("disponible"));
                 stalls.add(s);
             }
             query.close();
@@ -118,6 +143,27 @@ es un metodo del gestor solamente DEVUELVE UN DOUBLE
             
         }
         return TotalCollected();
+    }
+
+    public Stall GetStall(int idStall) {
+        Stall s = new Stall();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("SELECT * FROM Puestos WHERE id_puesto = " + idStall);
+            if (query.next()) {
+                s.setIdStall(query.getInt("id_puesto"));
+                s.setFloor(query.getInt("piso"));
+                s.setChairsAmount(query.getInt("cantidad_sillas"));
+                s.setWithWindows(query.getBoolean("tiene_ventana"));
+                s.setAvailable(query.getBoolean("disponible"));
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
     }
 }
 

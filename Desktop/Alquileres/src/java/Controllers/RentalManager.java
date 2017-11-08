@@ -112,7 +112,7 @@ public class RentalManager {
             Statement stmt = conn.createStatement();
             ResultSet query = stmt.executeQuery("SELECT * FROM Alquileres ");
             while (query.next()) {
-                Client c = new Client();
+                Client r = new Client();
                 Stall s = new Stall();
                 ClientManager cm = new ClientManager();
                 StallManager sm = new StallManager();
@@ -138,13 +138,77 @@ public class RentalManager {
     }
 */
      
-    public void ModifyRental(Rental rental) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("EXEC sp_update_alquiler ?, ?, ?");
-        stmt.setInt(1, rental.getComputersAmount());
-        stmt.setInt(2, rental.getExtraChairsAmount());
-        stmt.setBoolean(3, rental.isHasRoomAccess());
-        stmt.executeUpdate();
-        stmt.close();
-        conn.close();
+    public boolean ModifyRental(Rental rental){
+        boolean isSuccessful = true;
+        try {
+            PreparedStatement stmt = conn.prepareStatement("EXEC sp_update_alquiler ?, ?, ?");
+            stmt.setInt(1, rental.getComputersAmount());
+            stmt.setInt(2, rental.getExtraChairsAmount());
+            stmt.setBoolean(3, rental.isHasRoomAccess());
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RentalManager.class.getName()).log(Level.SEVERE, null, ex);
+            isSuccessful = false;
+        }
+        return isSuccessful;
+    }
+    
+    public ArrayList<Rental> GetRentals(){
+        ArrayList<Rental> rentals = new ArrayList<>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("SELECT * FROM Alquileres");
+            while (query.next()) {
+                ClientManager cm = new ClientManager();
+                Client c = cm.GetClient(query.getInt("id_cliente"));
+                StallManager sm = new StallManager();
+                Stall s = sm.GetStall(query.getInt("id_puesto"));
+                Rental r = new Rental();
+                r.setClient(c);
+                r.setStall(s);
+                r.setComputersAmount(query.getInt("cantidad_computadoras"));
+                r.setExtraChairsAmount(query.getInt("cantidad_sillas_adicionales"));
+                r.setHasRoomAccess(query.getBoolean("tiene_acceso_sala_reuniones"));
+                r.setDate(query.getString("fecha"));
+                r.setComputersAmount(query.getInt("estado"));
+                rentals.add(r);
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rentals;
+    }
+
+    public Rental GetRental(int idRental){
+        Rental rental = new Rental();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet query = stmt.executeQuery("SELECT * FROM Alquileres");
+            if (query.next()) {
+                ClientManager cm = new ClientManager();
+                Client c = cm.GetClient(query.getInt("id_cliente"));
+                StallManager sm = new StallManager();
+                Stall s = sm.GetStall(query.getInt("id_puesto"));
+                Rental r = new Rental();
+                rental.setClient(c);
+                rental.setStall(s);
+                rental.setComputersAmount(query.getInt("cantidad_computadoras"));
+                rental.setExtraChairsAmount(query.getInt("cantidad_sillas_adicionales"));
+                rental.setHasRoomAccess(query.getBoolean("tiene_acceso_sala_reuniones"));
+                rental.setDate(query.getString("fecha"));
+                rental.setState(query.getBoolean("estado"));
+            }
+            query.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rental;
     }
 }

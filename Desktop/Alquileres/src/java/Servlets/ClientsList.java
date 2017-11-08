@@ -5,22 +5,23 @@
  */
 package Servlets;
 
-import Controllers.RentalManager;
-import Model.Client;
-import Model.Rental;
-import Model.Stall;
+import Controllers.ClientManager;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Acer
+ * @author Fernando M. de Lima
  */
-public class AlterRental extends HttpServlet {
+@WebServlet(name = "ClientsList", urlPatterns = {"/ClientsList"})
+public class ClientsList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,19 +34,13 @@ public class AlterRental extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AlterRental</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AlterRental at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        ClientManager con = new ClientManager();
+        ArrayList clients = con.GetClients();
+        
+        request.setAttribute("clientsList", clients);
+        
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientsList.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -74,32 +69,6 @@ public class AlterRental extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-        String client = request.getParameter("client");
-        String stall = request.getParameter("stall");
-        String computersAmount = request.getParameter("computersAmount");
-        String extraChairsAmount = request.getParameter("extraChairsAmount");
-        String hasRoomAccess = request.getParameter("hasRoomAccess");
-        
-        boolean hasRoomAccessB = true;
-        if (hasRoomAccess == null)
-            hasRoomAccessB = false;
-        
-        Client c = new Client();
-        c.setIdClient(Integer.parseInt(client));
-        Stall s = new Stall();
-        s.setIdStall(Integer.parseInt(stall));
-        Rental rental = new Rental(c, s, Integer.parseInt(computersAmount), Integer.parseInt(extraChairsAmount), hasRoomAccessB);
-        
-        RentalManager rm = new RentalManager();
-        boolean sucessful = rm.ModifyRental(rental);
-        
-        boolean successful = rm.AddNewRental(rental);
-        if(successful)
-            getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
-        else
-            response.sendRedirect("error.jsp");      
         processRequest(request, response);
     }
 
