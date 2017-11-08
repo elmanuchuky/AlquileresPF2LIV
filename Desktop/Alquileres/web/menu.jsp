@@ -11,7 +11,7 @@
               </div>
               <ul class="nav navbar-nav">
                 <li><a href="rental.jsp">Registro de Alquileres</a></li>
-                <li><a href="rentalAlter.jsp">Editar Alquileres</a></li>
+                <li><a href="rentalsList.jsp">Ver Alquileres</a></li>
                 <li><a href="stall.jsp">Registro de Puestos</a></li>
                 <li><a href="client.jsp">Registro de Clientes</a></li>
               </ul>

@@ -48,7 +48,13 @@
                 <td><%= r.getComputersAmount() %></td>
                 <td>$<%= r.getTotalPrice() %></td>
                 <td><%= r.getDate() %></td>
-                <td><a href="/Alquileres/AlterRental/id=<%= r.getIdRental() %>">Modificar</a></td>
+                <td>
+                    <form action="AlterRental" method="GET">
+                        <% HttpSession sessionId = request.getSession();
+                        sessionId.setAttribute("idRentalModify", r.getIdRental()); %>
+                        <input type="submit" value="Modificar" class="btn btn-primary" />
+                    </form>
+                </td>
             </tr>
             <% } %>
         </table>
