@@ -66,6 +66,15 @@ public class Stall {
         this.idStall = idStall;
     }
 
+    public double getBasePrice(){
+        double base = 2000;
+        if (floor > 3)
+            base += 1000;
+        if (withWindows)
+            base += 500;
+        return base;
+    }
+    
     @Override
     public String toString() {
         return "Stall{" + "idStall=" + idStall + ", floor=" + floor + ", chairsAmount=" + chairsAmount + ", withWindows=" + withWindows + ", available=" + available + '}';

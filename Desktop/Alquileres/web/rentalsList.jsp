@@ -16,8 +16,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    ClientManager con = new ClientManager();
-    ArrayList clientsList = con.GetClientsWhoRent();
+    RentalManager con = new RentalManager();
+    ArrayList rentalsList = con.GetRentals();
     %>
     
 <!DOCTYPE html>
@@ -32,19 +32,23 @@
         
         <table border="1" class="table table-striped table-hover table-dark">
             <tr>
-                <th>Apellido</th><th>Nombre</th><th>Documento</th><th>Cantidad de Puestos</th><th>Importe Total</th><th></th>
+                <th>Apellido</th><th>Nombre</th><th>Mail</th><th>Piso</th><th>Cantidad de Sillas</th><th>Sillas extras</th><th>Ventana?</th><th>Cantidad de Computadoras</th><th>Importe Total</th><th>Fecha</th><th></th>
             </tr>
-            <% for (Object client : clientsList) {
-                    VMVwListadoClientes c = (VMVwListadoClientes) client;
+            <% for (Object rental : rentalsList) {
+                    Rental r = (Rental) rental;
             %>
             <tr>
-                <td><%= c.getSureName() %></td>
-                <td><%= c.getName() %></td>
-                <td><%= c.getDocument() %></td>
-                <td><%= c.getStalls() %></td>
-                <td>$<%= c.getTotal() %></td>
-
-                <td><a href="/Editar/id=<%= c.getId() %>">Modificar</a></td>
+                <td><%= r.getClient().getClientSurename() %></td>
+                <td><%= r.getClient().getClientName() %></td>
+                <td><%= r.getClient().getClientMail() %></td>
+                <td><%= r.getStall().getFloor() %></td>
+                <td><%= r.getStall().getChairsAmount() %></td>
+                <td><%= r.getExtraChairsAmount() %></td>
+                <td><%= r.getStall().isWithWindows() %></td>
+                <td><%= r.getComputersAmount() %></td>
+                <td>$<%= r.getTotalPrice() %></td>
+                <td><%= r.getDate() %></td>
+                <td><a href="/Editar/id=<%= r.getIdRental() %>">Modificar</a></td>
             </tr>
             <% } %>
         </table>

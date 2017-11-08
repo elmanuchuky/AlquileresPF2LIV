@@ -105,6 +105,15 @@ public class Rental {
     public void setState(boolean state) {
         this.state = state;
     }
+    
+    public double getTotalPrice(){
+        double total = stall.getBasePrice();
+        if (isHasRoomAccess())
+            total += 1000;
+        total += (800 * computersAmount);
+        total += (100 * extraChairsAmount);
+        return total;
+    }
 
     @Override
     public String toString() {

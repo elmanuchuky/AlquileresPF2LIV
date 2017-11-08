@@ -170,9 +170,10 @@ public class RentalManager {
                 r.setStall(s);
                 r.setComputersAmount(query.getInt("cantidad_computadoras"));
                 r.setExtraChairsAmount(query.getInt("cantidad_sillas_adicionales"));
-                r.setHasRoomAccess(query.getBoolean("tiene_acceso_sala_reuniones"));
+                r.setHasRoomAccess(query.getBoolean("tine_acceso_sala_reuniones"));
                 r.setDate(query.getString("fecha"));
-                r.setComputersAmount(query.getInt("estado"));
+                r.setState(query.getBoolean("estado"));
+                r.setIdRental(query.getInt("id_alquiler"));
                 rentals.add(r);
             }
             query.close();
