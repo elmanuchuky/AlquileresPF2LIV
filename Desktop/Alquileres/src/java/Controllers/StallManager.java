@@ -147,6 +147,7 @@ es un metodo del gestor solamente DEVUELVE UN DOUBLE
             Logger.getLogger(StallManager.class.getName()).log(Level.SEVERE, null, ex);
             
         }
+        // falta una parte todavia
         return TotalCollected();
     }
 
