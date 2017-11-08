@@ -42,6 +42,8 @@ public class AlterRental extends HttpServlet {
             out.println("<title>Servlet AlterRental</title>");            
             out.println("</head>");
             out.println("<body>");
+            String id = request.getParameter("id");
+            out.println("<h1>Servlet AlterRental at " + request.getContextPath() + "jojo=" + id + "</h1>");
             out.println("<h1>Servlet AlterRental at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
@@ -93,9 +95,8 @@ public class AlterRental extends HttpServlet {
         Rental rental = new Rental(c, s, Integer.parseInt(computersAmount), Integer.parseInt(extraChairsAmount), hasRoomAccessB);
         
         RentalManager rm = new RentalManager();
-        boolean sucessful = rm.ModifyRental(rental);
+        boolean successful = rm.ModifyRental(rental);
         
-        boolean successful = rm.AddNewRental(rental);
         if(successful)
             getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
         else

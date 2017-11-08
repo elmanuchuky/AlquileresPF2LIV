@@ -48,7 +48,7 @@
                 <td><%= r.getComputersAmount() %></td>
                 <td>$<%= r.getTotalPrice() %></td>
                 <td><%= r.getDate() %></td>
-                <td><a href="/Editar/id=<%= r.getIdRental() %>">Modificar</a></td>
+                <td><a href="/Alquileres/AlterRental/id=<%= r.getIdRental() %>">Modificar</a></td>
             </tr>
             <% } %>
         </table>
