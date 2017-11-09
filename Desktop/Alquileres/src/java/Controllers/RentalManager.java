@@ -101,10 +101,11 @@ public class RentalManager {
     public boolean ModifyRental(Rental rental){
         boolean isSuccessful = true;
         try {
-            PreparedStatement stmt = conn.prepareStatement("EXEC sp_update_alquiler ?, ?, ?");
+            PreparedStatement stmt = conn.prepareStatement("EXEC sp_update_alquiler ?, ?, ?, ?");
             stmt.setInt(1, rental.getComputersAmount());
             stmt.setInt(2, rental.getExtraChairsAmount());
             stmt.setBoolean(3, rental.isHasRoomAccess());
+            stmt.setInt(4, rental.getIdRental());
             stmt.executeUpdate();
             stmt.close();
             conn.close();
@@ -149,7 +150,7 @@ public class RentalManager {
         Rental rental = new Rental();
         try {
             Statement stmt = conn.createStatement();
-            ResultSet query = stmt.executeQuery("SELECT * FROM Alquileres");
+            ResultSet query = stmt.executeQuery("SELECT * FROM Alquileres WHERE id_alquiler = " + idRental);
             if (query.next()) {
                 ClientManager cm = new ClientManager();
                 Client c = cm.GetClient(query.getInt("id_cliente"));

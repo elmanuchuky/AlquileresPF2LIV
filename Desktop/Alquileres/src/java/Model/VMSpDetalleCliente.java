@@ -69,7 +69,10 @@ public class VMSpDetalleCliente {
         this.Importe_mensual = Importe_mensual;
     }
 
-    
-   
-    
+    @Override
+    public String toString() {
+        return Cliente + ", " + Documento + ", " + Mail + ", " + Telefono + ", $" + Importe_mensual;
     }
+    
+    
+}

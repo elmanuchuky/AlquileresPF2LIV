@@ -14,6 +14,7 @@
     ArrayList rentalsList = con.GetRentals();
     %>
     
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,7 +27,7 @@
         
         <table border="1" class="table table-striped table-hover table-dark">
             <tr>
-                <th>Apellido</th><th>Nombre</th><th>Mail</th><th>Piso</th><th>Cantidad de Sillas</th><th>Sillas extras</th><th>Ventana?</th><th>Cantidad de Computadoras</th><th>Importe Total</th><th>Fecha</th><th></th>
+                <th>Apellido</th><th>Nombre</th><th>Mail</th><th>Piso</th><th>Cantidad de Sillas</th><th>Sillas extras</th><th>Ventana?</th><th>Accesde a Sala?</th><th>Cantidad de Computadoras</th><th>Importe Total</th><th>Fecha</th><th></th>
             </tr>
             <% for (Object rental : rentalsList) {
                     Rental r = (Rental) rental;
@@ -39,15 +40,12 @@
                 <td><%= r.getStall().getChairsAmount() %></td>
                 <td><%= r.getExtraChairsAmount() %></td>
                 <td><%= r.getStall().isWithWindows() %></td>
+                <td><%= r.isHasRoomAccess() %></td>
                 <td><%= r.getComputersAmount() %></td>
                 <td>$<%= r.getTotalPrice() %></td>
                 <td><%= r.getDate() %></td>
                 <td>
-                    <form action="AlterRental" method="GET">
-                        <% HttpSession sessionId = request.getSession();
-                        sessionId.setAttribute("idRentalModify", r.getIdRental()); %>
-                        <input type="submit" value="Modificar" class="btn btn-primary" />
-                    </form>
+                    <a href="/Alquileres/AlterRental?idRental=<%= r.getIdRental() %>">Editar</a>
                 </td>
             </tr>
             <% } %>

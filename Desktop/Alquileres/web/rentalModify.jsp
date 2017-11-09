@@ -10,12 +10,20 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
+    RentalManager cone = new RentalManager();
     ClientManager con = new ClientManager();
     StallManager co = new StallManager();
+    
+    String idRental = request.getParameter("idRental");
+    int idRentalN = Integer.parseInt(idRental);
+    Rental rental = cone.GetRental(idRentalN);
     ArrayList clients = con.GetClients();
     ArrayList stalls = co.GetAvailableStalls();
+    HttpSession mySession = request.getSession();
+    mySession.setAttribute("idRental", idRentalN);
     %>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -45,13 +53,17 @@
                 <% } %>
             </select>
             <p>
-                <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" />
+                <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" value="<%= rental.getComputersAmount() %>"/>
             </p>
             <p>
-                <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" />
+                <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" value="<%= rental.getExtraChairsAmount()%>" />
             </p>
             <p>
+                <% if (rental.isHasRoomAccess()) { %>
+                <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" checked />
+                <% } else { %>
                 <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" />
+                <% } %>
             </p>
             <input type="submit" value="Aceptar" class="btn btn-primary" />
         </form>

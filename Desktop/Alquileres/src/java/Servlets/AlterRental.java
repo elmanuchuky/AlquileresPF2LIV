@@ -50,8 +50,8 @@ public class AlterRental extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("WHAT");
         processRequest(request, response);
-        
     }
 
     /**
@@ -65,8 +65,9 @@ public class AlterRental extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
+        //processRequest(request, response);
+        HttpSession mySession = request.getSession();
+        int idRental = (Integer) mySession.getAttribute("idRental");
         String client = request.getParameter("client");
         String stall = request.getParameter("stall");
         String computersAmount = request.getParameter("computersAmount");
@@ -81,7 +82,10 @@ public class AlterRental extends HttpServlet {
         c.setIdClient(Integer.parseInt(client));
         Stall s = new Stall();
         s.setIdStall(Integer.parseInt(stall));
+        System.out.println(idRental);
+        
         Rental rental = new Rental(c, s, Integer.parseInt(computersAmount), Integer.parseInt(extraChairsAmount), hasRoomAccessB);
+        rental.setIdRental(idRental);
         
         RentalManager rm = new RentalManager();
         boolean successful = rm.ModifyRental(rental);

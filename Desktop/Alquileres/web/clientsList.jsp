@@ -14,6 +14,7 @@
     ArrayList clientsList = con.GetClientsWhoRent();
     %>
     
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,7 +38,7 @@
                 <td><%= c.getDocument() %></td>
                 <td><%= c.getStalls() %></td>
                 <td>$<%= c.getTotal() %></td>
-                <td><a href="#">Ver</a></td>
+                <td><a href="/Alquileres/ClientsDetails?idClient=<%= c.getId() %>">Ver</a></td>
             </tr>
             <% } %>
         </table>
