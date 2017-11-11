@@ -5,9 +5,8 @@
  */
 package Servlets;
 
-import Controllers.ClientManager;
-import Controllers.DocumentTypeManager;
-import Model.Client;
+import Controllers.StallManager;
+import Model.VMVwTotalPorPiso;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -18,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Acer
+ * @author Fernando M. de Lima
  */
-public class NewClient extends HttpServlet {
+public class GatheredByFloor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,10 +48,10 @@ public class NewClient extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DocumentTypeManager dtm = new DocumentTypeManager();
-        ArrayList types = dtm.GetTypes();
-        request.setAttribute("types", types);
-        getServletContext().getRequestDispatcher("/client.jsp").forward(request, response);
+        StallManager sm = new StallManager();
+        ArrayList<VMVwTotalPorPiso> floors = sm.TotalCollected();
+        request.setAttribute("floors", floors);
+        getServletContext().getRequestDispatcher("/floor.jsp").forward(request, response);
         processRequest(request, response);
     }
 
@@ -68,22 +67,6 @@ public class NewClient extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        String clientName = request.getParameter("clientName");
-        String clientSurename = request.getParameter("clientSurename");
-        String clientMail = request.getParameter("clientMail");
-        String clientPhone = request.getParameter("clientPhone");
-        String clientDocument = request.getParameter("clientDocument");
-        String clientDocumentType = request.getParameter("clientDocumentType");
-
-        Client client = new Client(clientName, clientSurename, clientMail, clientPhone, Integer.parseInt(clientDocument), Integer.parseInt(clientDocumentType));
-        ClientManager cm = new ClientManager();
-        boolean successful = cm.AddNewClient(client);
-
-        if (successful) {
-            getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("error.jsp");
-        }
     }
 
     /**

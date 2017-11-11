@@ -12,6 +12,26 @@
         <servlet-name>AlterRental</servlet-name>
         <servlet-class>Servlets.AlterRental</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClientsDetails</servlet-name>
+        <servlet-class>Servlets.ClientsDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RentalsList</servlet-name>
+        <servlet-class>Servlets.RentalsList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GatheredByFloor</servlet-name>
+        <servlet-class>Servlets.GatheredByFloor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StallsList</servlet-name>
+        <servlet-class>Servlets.StallsList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StallsAvailable</servlet-name>
+        <servlet-class>Servlets.StallsAvailable</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewClient</servlet-name>
         <url-pattern>/NewClient</url-pattern>
@@ -24,7 +44,26 @@
         <servlet-name>AlterRental</servlet-name>
         <url-pattern>/AlterRental</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>ClientsDetails</servlet-name>
+        <url-pattern>/ClientsDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RentalsList</servlet-name>
+        <url-pattern>/RentalsList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GatheredByFloor</servlet-name>
+        <url-pattern>/GatheredByFloor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StallsList</servlet-name>
+        <url-pattern>/StallsList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StallsAvailable</servlet-name>
+        <url-pattern>/StallsAvailable</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

@@ -9,12 +9,7 @@
 <%@page import="Model.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%
-    ClientManager con = new ClientManager();
-    StallManager co = new StallManager();
-    ArrayList clients = con.GetClients();
-    ArrayList stalls = co.GetAvailableStalls();
-    %>
+
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -28,22 +23,14 @@
         <jsp:include page="menu.jsp"></jsp:include>
         <form action="NewRental" method="POST">
                 <label>Cliente:</label><select name="client">
-                <% 
-                for(Object client : clients)
-                {
-                    Client c = (Client)client;
-                %>
-                <option value="<%= c.getIdClient() %>"><%= c.getClientSurename() + ", " + c.getClientName()%></option>
-                <% } %>
+                <c:forEach items="${clients}" var="clientV" >
+                    <option value="${clientV.getIdClient()}">${clientV.getClientSurename()}, ${clientV.getClientName()}</option>
+                </c:forEach>
             </select>
                 <label>Puesto:</label><select name="stall">
-                <% 
-                for(Object type : stalls)
-                {
-                    VMAvailableStalls s = (VMAvailableStalls)type;
-                %>
-                <option value="<%= s.getId()%>"><%= s.toString() %></option>
-                <% } %>
+                <c:forEach items="${stalls}" var="stallV" >
+                    <option value="${stallV.getId()}">${stallV.toString()}</option>
+                </c:forEach>
             </select>
             <p>
                 <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" />

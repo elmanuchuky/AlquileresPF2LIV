@@ -1,6 +1,6 @@
 <%-- 
-    Document   : test
-    Created on : Nov 7, 2017, 7:38:23 PM
+    Document   : stallsAvailables
+    Created on : Nov 8, 2017, 2:59:16 AM
     Author     : Fernando M. de Lima
 --%>
 
@@ -21,16 +21,20 @@
             <h1>Listado de Clientes</h1>
             <table border="1" class="table table-striped table-hover table-dark">
                 <tr>
-                    <th>Apellido</th><th>Nombre</th><th>Documento</th><th>Cantidad de Puestos</th><th>Importe Total</th><th>Detalle</th>
+                    <th>Id Puesto</th><th>Piso</th><th>Cantidad de Sillas</th><th>Ventana</th><th>Precio Base</th>
                 </tr>
-            <c:forEach items="${clients}" var="clientV">
+            <c:forEach items="${stallsList}" var="stallV">
                 <tr>
-                    <td>${clientV.getSureName()}</td>
-                    <td>${clientV.getName()}</td>
-                    <td>${clientV.getDocument()}</td>
-                    <td>${clientV.getStalls()}</td>
-                    <td>${clientV.getTotal()}</td>
-                    <td><a href="/Alquileres/ClientsDetails?idClient=${clientV.getId()}">Ver</a></td>
+                    <td>${tallV.getId()}</td>
+                    <td>${stallV.getFloor()}</td>
+                    <td>${stallV.getChairsAmount()}</td>
+                    <c:if test="${stallV.isWithWindows()}">
+                    <td>Tiene</td>
+                    </c:if>
+                    <c:if test="${!stallV.isWithWindows()}">
+                    <td>No Tiene</td>
+                    </c:if>
+                    <td>$${stallV.getBasePrice()}</td>
                 </tr>
             </c:forEach>
         </table>

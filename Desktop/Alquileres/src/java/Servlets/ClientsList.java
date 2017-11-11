@@ -6,6 +6,8 @@
 package Servlets;
 
 import Controllers.ClientManager;
+import Model.Client;
+import Model.VMVwListadoClientes;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -34,13 +36,7 @@ public class ClientsList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ClientManager con = new ClientManager();
-        ArrayList clients = con.GetClients();
-        
-        request.setAttribute("clientsList", clients);
-        
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientsList.jsp");
-        rd.forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,6 +51,11 @@ public class ClientsList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ClientManager cm = new ClientManager();
+        ArrayList<VMVwListadoClientes> clients = cm.GetClientsWhoRent();
+        request.setAttribute("clients", clients);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientsList.jsp");
+        rd.forward(request, response);
         processRequest(request, response);
     }
 
