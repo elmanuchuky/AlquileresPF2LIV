@@ -87,9 +87,9 @@ public class NewClient extends HttpServlet {
         boolean successful = cm.AddNewClient(client);
 
         if (successful) {
-            getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         } else {
-            response.sendRedirect("error.jsp");
+            getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 

@@ -51,6 +51,7 @@ public class AlterRental extends HttpServlet {
             throws ServletException, IOException {
         RentalManager rm = new RentalManager();
         String idRental = request.getParameter("idRental");
+        request.setAttribute("idRental", idRental);
         int idRentalN = Integer.parseInt(idRental);
         Rental rental = rm.GetRental(idRentalN);
         request.setAttribute("rental", rental);
@@ -77,10 +78,7 @@ public class AlterRental extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        HttpSession mySession = request.getSession();
-        int idRental = (Integer) mySession.getAttribute("idRental");
-        String client = request.getParameter("client");
-        String stall = request.getParameter("stall");
+        int idRental = Integer.parseInt(request.getParameter("idRental"));
         String computersAmount = request.getParameter("computersAmount");
         String extraChairsAmount = request.getParameter("extraChairsAmount");
         String hasRoomAccess = request.getParameter("hasRoomAccess");
@@ -90,22 +88,16 @@ public class AlterRental extends HttpServlet {
             hasRoomAccessB = false;
         }
 
-        Client c = new Client();
-        c.setIdClient(Integer.parseInt(client));
-        Stall s = new Stall();
-        s.setIdStall(Integer.parseInt(stall));
-        System.out.println(idRental);
-
-        Rental rental = new Rental(c, s, Integer.parseInt(computersAmount), Integer.parseInt(extraChairsAmount), hasRoomAccessB);
+        Rental rental = new Rental(null, null, Integer.parseInt(computersAmount), Integer.parseInt(extraChairsAmount), hasRoomAccessB);
         rental.setIdRental(idRental);
 
         RentalManager rm = new RentalManager();
         boolean successful = rm.ModifyRental(rental);
 
         if (successful) {
-            getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         } else {
-            response.sendRedirect("error.jsp");
+            getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
         }
         processRequest(request, response);
     }

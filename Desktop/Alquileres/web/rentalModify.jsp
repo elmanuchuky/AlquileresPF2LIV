@@ -14,15 +14,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Modificar el Alquiler ${rental.getIdRental()}</title>
+        <title>Modificar el Alquiler</title>
         <jsp:include page="links.jsp"></jsp:include>
-        <script src="validar.js" type="text/javascript"></script>
+            <script src="validar.js" type="text/javascript"></script>
         </head>
         <body>
         <jsp:include page="menu.jsp"></jsp:include>
             <form action="AlterRental" method="POST" onsubmit="return validarNuevoAlquiler();">
-                <p>
-                    <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" value="${rental.getComputersAmount()}" id="txtComputersAmount" required />
+            <input type="hidden" name="idRental" value="<%= request.getParameter("idRental") %>">
+            <p>
+                <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" value="${rental.getComputersAmount()}" id="txtComputersAmount" required />
             </p>
             <p>
                 <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" value="${rental.getExtraChairsAmount()}" id="txtExtraChairsAmount" required />

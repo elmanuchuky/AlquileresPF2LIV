@@ -103,9 +103,9 @@ public class NewRental extends HttpServlet {
         RentalManager rm = new RentalManager();
         boolean successful = rm.AddNewRental(rental);
         if (successful) {
-            getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         } else {
-            response.sendRedirect("error.jsp");
+            getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
         }
         processRequest(request, response);
     }
