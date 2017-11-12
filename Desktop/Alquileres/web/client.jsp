@@ -21,7 +21,7 @@
         <jsp:include page="menu.jsp"></jsp:include>
             <form action="NewClient" method="POST">
                 <p>
-                    <label>Nombre:</label><input type="text" name="clientName" />
+                    <label>Nombre:</label><input type="text" name="clientName" required />
                 </p>
                 <p>
                     <label>Apellido:</label><input type="text" name="clientSurename" />

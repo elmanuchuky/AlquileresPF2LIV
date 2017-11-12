@@ -15,6 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Nuevo Puesto</title>
         <jsp:include page="links.jsp"></jsp:include>
+        <script src="validar.js"></script>
     </head>
     <body>
         <jsp:include page="menu.jsp"></jsp:include>
