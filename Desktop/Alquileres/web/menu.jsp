@@ -19,7 +19,7 @@
             <li><a href="/Alquileres/StallsList">Puestos</a></li>
             <li><a href="/Alquileres/StallsAvailable">Puestos Disponibles</a></li>
                 <c:if test="${isLogged}">
-                <li><a href="/Alquileres/first.jsp">Cerrar Sesion</a></li>
+                <li><a href="/Alquileres/first.jsp" onclick="alert('Se ha desconectado');">Cerrar Sesion</a></li>
                 </c:if>
                 <c:if test="${!isLogged}">
                 <li><a href="/Alquileres/Login">Iniciar Sesion</a></li>
