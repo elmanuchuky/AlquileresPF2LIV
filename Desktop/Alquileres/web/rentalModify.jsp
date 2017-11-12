@@ -9,61 +9,30 @@
 <%@page import="Model.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%
-    RentalManager cone = new RentalManager();
-    ClientManager con = new ClientManager();
-    StallManager co = new StallManager();
-    
-    String idRental = request.getParameter("idRental");
-    int idRentalN = Integer.parseInt(idRental);
-    Rental rental = cone.GetRental(idRentalN);
-    ArrayList clients = con.GetClients();
-    ArrayList stalls = co.GetAvailableStalls();
-    HttpSession mySession = request.getSession();
-    mySession.setAttribute("idRental", idRentalN);
-    %>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Modificar el Alquiler ${rental.getIdRental()}</title>
         <jsp:include page="links.jsp"></jsp:include>
-    </head>
-    <body>
+        </head>
+        <body>
         <jsp:include page="menu.jsp"></jsp:include>
-        <form action="AlterRental" method="POST">
-                <label>Cliente:</label><select name="client"  >
-                <% 
-                for(Object client : clients)
-                {
-                    Client c = (Client)client;
-                %>
-                <option value="<%= c.getIdClient() %>"><%= c.getClientSurename() + ", " + c.getClientName()%></option>
-                <% } %>
-            </select>
-                <label>Puesto:</label><select name="stall">
-                <% 
-                for(Object type : stalls)
-                {
-                    VMAvailableStalls s = (VMAvailableStalls)type;
-                %>
-                <option value="<%= s.getId()%>"><%= s.toString() %></option>
-                <% } %>
-            </select>
-            <p>
-                <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" value="<%= rental.getComputersAmount() %>"/>
+            <form action="AlterRental" method="POST">
+                <p>
+                    <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" value="${rental.getComputersAmount()}"/>
             </p>
             <p>
-                <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" value="<%= rental.getExtraChairsAmount()%>" />
+                <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" value="${rental.getExtraChairsAmount()}" />
             </p>
             <p>
-                <% if (rental.isHasRoomAccess()) { %>
-                <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" checked />
-                <% } else { %>
-                <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" />
-                <% } %>
+                <c:if test="${rental.isHasRoomAccess()}">
+                    <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" checked />
+                </c:if>
+                <c:if test="${!rental.isHasRoomAccess()}">
+                    <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" />
+                </c:if>
             </p>
             <input type="submit" value="Aceptar" class="btn btn-primary" />
         </form>

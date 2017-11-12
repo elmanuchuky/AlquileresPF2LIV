@@ -18,6 +18,7 @@
         <jsp:include page="links.jsp"></jsp:include>
         </head>
         <body>
+        <jsp:include page="menu.jsp"></jsp:include>
             <h1>Listado de Clientes</h1>
             <table border="1" class="table table-striped table-hover table-dark">
                 <tr>

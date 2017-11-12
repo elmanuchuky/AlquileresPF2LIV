@@ -16,7 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Nuevo Alquiler</title>
         <jsp:include page="links.jsp"></jsp:include>
     </head>
     <body>
@@ -26,7 +26,7 @@
                 <c:forEach items="${clients}" var="clientV" >
                     <option value="${clientV.getIdClient()}">${clientV.getClientSurename()}, ${clientV.getClientName()}</option>
                 </c:forEach>
-            </select>
+                </select><br>
                 <label>Puesto:</label><select name="stall">
                 <c:forEach items="${stalls}" var="stallV" >
                     <option value="${stallV.getId()}">${stallV.toString()}</option>

@@ -69,7 +69,10 @@ public class VMAvailableStalls {
 
     @Override
     public String toString() {
-        return "Piso " + floor + ", Sillas " + chairsAmount + ", Ventana " + withWindows + ", Precio Base; $" + basePrice;
+        String windows = "Sin";
+        if (withWindows)
+            windows = "Con";
+        return "Piso " + floor + ", Sillas " + chairsAmount + ", " + windows + " ventana " + ", Precio Base; $" + basePrice;
     }
     
     

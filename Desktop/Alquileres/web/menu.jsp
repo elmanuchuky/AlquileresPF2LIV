@@ -5,19 +5,26 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <a class="navbar-brand" href="index.html">Alquileres</a>
-              </div>
-              <ul class="nav navbar-nav">
-                <li><a href="/Alquileres/NewRental">Registro de Alquileres</a></li>
-                <li><a href="/Alquileres/RentalsList">Ver Alquileres</a></li>
-                <li><a href="/Alquileres/NewStall">Registro de Puestos</a></li>
-                <li><a href="/Alquileres/NewClient">Registro de Clientes</a></li>
-                <li><a href="/Alquileres/GatheredByFloor">Ver Recaudado por Piso</a></li>
-                <li><a href="/Alquileres/ClientsList">Ver Listado de Clientes</a></li>
-                <li><a href="/Alquileres/StallsList">Ver Listado de Todos los Puestos</a></li>
-                <li><a href="/Alquileres/StallsAvailable">Ver Listado de Puestos Disponibles</a></li>
-              </ul>
-            </div>
-          </nav>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Alquileres</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/Alquileres/NewRental">Alquilar</a></li>
+            <li><a href="/Alquileres/RentalsList">Ver Alquileres</a></li>
+            <li><a href="/Alquileres/NewStall">Nuevo Puesto</a></li>
+            <li><a href="/Alquileres/NewClient">Nuevo Clientes</a></li>
+            <li><a href="/Alquileres/GatheredByFloor">Recaudado por Piso</a></li>
+            <li><a href="/Alquileres/ClientsList">Clientes</a></li>
+            <li><a href="/Alquileres/StallsList">Puestos</a></li>
+            <li><a href="/Alquileres/StallsAvailable">Puestos Disponibles</a></li>
+                <c:if test="${isLogged}">
+                <li><a href="/Alquileres/StallsAvailable">Cerrar Sesion</a></li>
+                </c:if>
+                <c:if test="${!isLogged}">
+                <li><a href="/Alquileres/StallsAvailable">Iniciar Sesion</a></li>
+                </c:if>
+
+        </ul>
+    </div>
+</nav>

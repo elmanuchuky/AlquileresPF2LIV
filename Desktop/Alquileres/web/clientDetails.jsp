@@ -9,44 +9,35 @@
 <%@page import="Model.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%
-    ClientManager con = new ClientManager();
-    String idClient = request.getParameter("idRental");
-    int idClientN = Integer.parseInt(idClient);
-    VMSpDetalleCliente clientDetails = con.GetClientDataImport(idClientN);
-    StallManager co = new StallManager();
-    ArrayList stalls = co.GetStallsPerClient(idClientN);
-    %>
-    
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Detalle de Cliente</title>
         <jsp:include page="links.jsp"></jsp:include>
-    </head>
-    <body>
-        <h1>Listado de Clientes</h1>
-        <h2><%= clientDetails.toString() %></h2>        
+        </head>
+        <body>
+        <jsp:include page="menu.jsp"></jsp:include>
+            <h1>Listado de Clientes</h1>
+            <h2>${clientDetails.toString()}</h2>        
         <table border="1" class="table table-striped table-hover table-dark">
             <tr>
-                <th>Piso</th><th>Cantidad de Sillas</th><th>Cantidad de Sillas</th><th>Ventana</th><th>Precio Base</th>
+                <th>Piso</th><th>Cantidad de Sillas</th><th>Ventana</th><th>Precio Base</th>
             </tr>
-            <% for (Object stall : stalls) {
-                    VmSpDetallePuestosAlquiladosCliente s = (VmSpDetallePuestosAlquiladosCliente) stall;
-            %>
-            <tr>
-                <td><%= s.getPiso() %></td>
-                <td><%= s.getCantidad_de_sillas() %></td>
-                <% if (s.getTiene_ventana()) { %>
-                <td>Tiene</td>
-                <% } else { %>
-                <td>No Tiene</td>
-                <% } %>
-                <td>$<%= s.getPrecio()%></td>
-            </tr>
-            <% } %>
+            <c:forEach items="${stalls}" var="stallV">
+                <tr>
+                    <td>${stallV.getPiso()}</td>
+                    <td>${stallV.getCantidad_de_sillas()}</td>
+                    <c:if test="${stallV.getTiene_ventana()}">
+                        <td>No Tiene</td>
+                    </c:if>
+                    <c:if test="${!stallV.getTiene_ventana()}">
+                        <td>Tiene</td>
+                    </c:if>
+                    <td>$${stallV.getPrecio()}</td>
+                </tr>
+            </c:forEach>
         </table>
     </body>
 </html>

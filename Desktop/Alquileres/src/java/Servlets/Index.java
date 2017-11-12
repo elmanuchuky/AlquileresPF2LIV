@@ -5,25 +5,19 @@
  */
 package Servlets;
 
-import Controllers.ClientManager;
-import Controllers.StallManager;
-import Model.VMSpDetalleCliente;
-import Model.VmSpDetallePuestosAlquiladosCliente;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Fernando M. de Lima
  */
-@WebServlet(name = "ClientDetail", urlPatterns = {"/ClientDetail"})
-public class ClientsDetails extends HttpServlet {
+public class Index extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,6 +31,7 @@ public class ClientsDetails extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,15 +46,9 @@ public class ClientsDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ClientManager cm = new ClientManager();
-        String idClient = request.getParameter("idClient");
-        int idClientN = Integer.parseInt(idClient);
-        VMSpDetalleCliente clientDetails = cm.GetClientDataImport(idClientN);
-        request.setAttribute("clientDetails", clientDetails);
-        StallManager sm = new StallManager();
-        ArrayList<VmSpDetallePuestosAlquiladosCliente> stalls = sm.GetStallsPerClient(idClientN);
-        request.setAttribute("stalls", stalls);
-        getServletContext().getRequestDispatcher("/clientDetails.jsp").forward(request, response);
+        HttpSession mySession = request.getSession();
+        request.setAttribute("isLogged", mySession.getAttribute("isLogged"));
+        getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         processRequest(request, response);
     }
 

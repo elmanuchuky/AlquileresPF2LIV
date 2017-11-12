@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Alquileres</title>
+        <title>Inicie Sesion</title>
         <jsp:include page="links.jsp"></jsp:include>
     </head>
     <body>

@@ -71,7 +71,7 @@ public class StallManager {
             while (query.next()) {
                 VmSpDetallePuestosAlquiladosCliente vm = new VmSpDetallePuestosAlquiladosCliente();
                 vm.setPiso(query.getInt("Piso"));
-                vm.setCantidad_de_sillas(query.getInt("Cantidad sillas"));
+                vm.setCantidad_de_sillas(query.getInt("Cantidad de sillas"));
                 vm.setTiene_ventana(query.getBoolean("Tiene ventana"));
                 vm.setPrecio(query.getDouble("Precio"));
                 stalls.add(vm);
