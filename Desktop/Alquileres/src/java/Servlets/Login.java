@@ -5,10 +5,7 @@
  */
 package Servlets;
 
-import Controllers.RentalManager;
-import Model.Client;
-import Model.Rental;
-import Model.Stall;
+import Controllers.ConfigurationVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,9 +16,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Acer
+ * @author Fernando M. de Lima
  */
-public class AlterRental extends HttpServlet {
+public class Login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,6 +32,7 @@ public class AlterRental extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,20 +47,8 @@ public class AlterRental extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RentalManager rm = new RentalManager();
-        String idRental = request.getParameter("idRental");
-        int idRentalN = Integer.parseInt(idRental);
-        Rental rental = rm.GetRental(idRentalN);
-        request.setAttribute("rental", rental);
-        HttpSession mySession = request.getSession();
-        boolean isLogged = (boolean) mySession.getAttribute("isLogged");
-        if (isLogged) {
-            getServletContext().getRequestDispatcher("/rentalModify.jsp").forward(request, response);
-        } else {
-            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-        }
         processRequest(request, response);
-
+        getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
     /**
@@ -76,38 +62,14 @@ public class AlterRental extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        HttpSession mySession = request.getSession();
-        int idRental = (Integer) mySession.getAttribute("idRental");
-        String client = request.getParameter("client");
-        String stall = request.getParameter("stall");
-        String computersAmount = request.getParameter("computersAmount");
-        String extraChairsAmount = request.getParameter("extraChairsAmount");
-        String hasRoomAccess = request.getParameter("hasRoomAccess");
-
-        boolean hasRoomAccessB = true;
-        if (hasRoomAccess == null) {
-            hasRoomAccessB = false;
-        }
-
-        Client c = new Client();
-        c.setIdClient(Integer.parseInt(client));
-        Stall s = new Stall();
-        s.setIdStall(Integer.parseInt(stall));
-        System.out.println(idRental);
-
-        Rental rental = new Rental(c, s, Integer.parseInt(computersAmount), Integer.parseInt(extraChairsAmount), hasRoomAccessB);
-        rental.setIdRental(idRental);
-
-        RentalManager rm = new RentalManager();
-        boolean successful = rm.ModifyRental(rental);
-
-        if (successful) {
-            getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("error.jsp");
-        }
         processRequest(request, response);
+        String mail = request.getParameter("mail");
+        String password = request.getParameter("password");
+        if (mail.equals(ConfigurationVariables.mail) && password.equals(ConfigurationVariables.password)) {
+            HttpSession mySession = request.getSession();
+            mySession.setAttribute("isLogged", true);
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        }
     }
 
     /**

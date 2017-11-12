@@ -16,13 +16,14 @@
     <body>
         <jsp:include page="menu.jsp"></jsp:include>
         <h1>Inicia sesion !!!</h1>
-        <form>
+        <form action="Login" method="POST">
             <p>
                 <label>Mail:</label><input type="mail" name="mail" />
             </p>
             <p>
                 <label>Contraseña:</label><input type="password" name="password" />
             </p>
+            <input type="submit" value="Aceptar">
         </form>
     </body>
 </html>

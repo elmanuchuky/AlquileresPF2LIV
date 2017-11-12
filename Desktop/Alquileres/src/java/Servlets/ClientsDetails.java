@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -59,7 +60,13 @@ public class ClientsDetails extends HttpServlet {
         StallManager sm = new StallManager();
         ArrayList<VmSpDetallePuestosAlquiladosCliente> stalls = sm.GetStallsPerClient(idClientN);
         request.setAttribute("stalls", stalls);
-        getServletContext().getRequestDispatcher("/clientDetails.jsp").forward(request, response);
+        HttpSession mySession = request.getSession();
+        boolean isLogged = (boolean) mySession.getAttribute("isLogged");
+        if (isLogged) {
+            getServletContext().getRequestDispatcher("/clientDetails.jsp").forward(request, response);
+        } else {
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        }
         processRequest(request, response);
     }
 

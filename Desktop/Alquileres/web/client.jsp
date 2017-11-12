@@ -24,16 +24,16 @@
                     <label>Nombre:</label><input type="text" name="clientName" required />
                 </p>
                 <p>
-                    <label>Apellido:</label><input type="text" name="clientSurename" />
+                    <label>Apellido:</label><input type="text" name="clientSurename" required />
                 </p>
                 <p>
-                    <label>Mail:</label><input type="text" name="clientMail" />
+                    <label>Mail:</label><input type="text" name="clientMail" required />
                 </p>
                 <p>
-                    <label>Telefono:</label><input type="text" name="clientPhone" />
+                    <label>Telefono:</label><input type="text" name="clientPhone" required />
                 </p>
                 <p>
-                    <label>Documento:</label><input type="text" name="clientDocument" />
+                    <label>Documento:</label><input type="text" name="clientDocument" required />
                 </p>
                 <p>
                     <label>Tipo de documento:</label><select name="clientDocumentType">

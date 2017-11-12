@@ -7,7 +7,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">Alquileres</a>
+            <a class="navbar-brand" href="/Alquileres/Index">Alquileres</a>
         </div>
         <ul class="nav navbar-nav">
             <li><a href="/Alquileres/NewRental">Alquilar</a></li>
@@ -19,10 +19,10 @@
             <li><a href="/Alquileres/StallsList">Puestos</a></li>
             <li><a href="/Alquileres/StallsAvailable">Puestos Disponibles</a></li>
                 <c:if test="${isLogged}">
-                <li><a href="/Alquileres/StallsAvailable">Cerrar Sesion</a></li>
+                <li><a href="/Alquileres/first.jsp">Cerrar Sesion</a></li>
                 </c:if>
                 <c:if test="${!isLogged}">
-                <li><a href="/Alquileres/StallsAvailable">Iniciar Sesion</a></li>
+                <li><a href="/Alquileres/Login">Iniciar Sesion</a></li>
                 </c:if>
 
         </ul>

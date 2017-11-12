@@ -26,7 +26,7 @@
                 </tr>
             <c:forEach items="${stallsList}" var="stallV">
                 <tr>
-                    <td>${tallV.getId()}</td>
+                    <td>${stallV.getId()}</td>
                     <td>${stallV.getFloor()}</td>
                     <td>${stallV.getChairsAmount()}</td>
                     <c:if test="${stallV.isWithWindows()}">

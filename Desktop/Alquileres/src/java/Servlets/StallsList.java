@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -51,7 +52,13 @@ public class StallsList extends HttpServlet {
         StallManager sm = new StallManager();
         ArrayList<Stall> list = sm.GetStalls();
         request.setAttribute("list", list);
-        getServletContext().getRequestDispatcher("/stallsList.jsp").forward(request, response);
+        HttpSession mySession = request.getSession();
+        boolean isLogged = (boolean) mySession.getAttribute("isLogged");
+        if (isLogged) {
+            getServletContext().getRequestDispatcher("/stallsList.jsp").forward(request, response);
+        } else {
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        }
         processRequest(request, response);
     }
 

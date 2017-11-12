@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -52,7 +53,13 @@ public class NewClient extends HttpServlet {
         DocumentTypeManager dtm = new DocumentTypeManager();
         ArrayList types = dtm.GetTypes();
         request.setAttribute("types", types);
-        getServletContext().getRequestDispatcher("/client.jsp").forward(request, response);
+        HttpSession mySession = request.getSession();
+        boolean isLogged = (boolean) mySession.getAttribute("isLogged");
+        if (isLogged) {
+            getServletContext().getRequestDispatcher("/client.jsp").forward(request, response);
+        } else {
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        }
         processRequest(request, response);
     }
 

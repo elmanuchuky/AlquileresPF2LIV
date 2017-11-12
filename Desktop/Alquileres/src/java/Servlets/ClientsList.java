@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -54,8 +55,13 @@ public class ClientsList extends HttpServlet {
         ClientManager cm = new ClientManager();
         ArrayList<VMVwListadoClientes> clients = cm.GetClientsWhoRent();
         request.setAttribute("clients", clients);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/clientsList.jsp");
-        rd.forward(request, response);
+        HttpSession mySession = request.getSession();
+        boolean isLogged = (boolean) mySession.getAttribute("isLogged");
+        if (isLogged) {
+            getServletContext().getRequestDispatcher("/clientsList.jsp").forward(request, response);
+        } else {
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        }
         processRequest(request, response);
     }
 
