@@ -16,7 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <jsp:include page="links.jsp"></jsp:include>
-        <script src="validarClient.js" type="text/javascript"></script>
+        <script src="src/validarClient.js" type="text/javascript"></script>
         </head>
         <body>
         <jsp:include page="menu.jsp"></jsp:include>
