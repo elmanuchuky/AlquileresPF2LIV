@@ -18,10 +18,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Nuevo Alquiler</title>
         <jsp:include page="links.jsp"></jsp:include>
+        <script src="validar.js" type="text/javascript"></script>
     </head>
     <body>
         <jsp:include page="menu.jsp"></jsp:include>
-        <form action="NewRental" method="POST">
+        <form action="NewRental" method="POST" onsubmit="return validarNuevoAlquiler();" >
                 <label>Cliente:</label><select name="client">
                 <c:forEach items="${clients}" var="clientV" >
                     <option value="${clientV.getIdClient()}">${clientV.getClientSurename()}, ${clientV.getClientName()}</option>
@@ -33,13 +34,13 @@
                 </c:forEach>
             </select>
             <p>
-                <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" />
+                <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" id="txtComputersAmount" required />
             </p>
             <p>
-                <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" />
+                <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" id="txtExtraChairsAmount" required />
             </p>
             <p>
-                <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" />
+                <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" id="chkHasRoomAccess" />
             </p>
             <input type="submit" value="Aceptar" class="btn btn-primary" />
         </form>

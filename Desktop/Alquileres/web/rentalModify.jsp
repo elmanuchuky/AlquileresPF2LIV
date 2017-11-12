@@ -16,15 +16,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Modificar el Alquiler ${rental.getIdRental()}</title>
         <jsp:include page="links.jsp"></jsp:include>
+        <script src="validar.js" type="text/javascript"></script>
         </head>
         <body>
         <jsp:include page="menu.jsp"></jsp:include>
-            <form action="AlterRental" method="POST">
+            <form action="AlterRental" method="POST" onsubmit="return validarNuevoAlquiler();">
                 <p>
-                    <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" value="${rental.getComputersAmount()}"/>
+                    <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" value="${rental.getComputersAmount()}" id="txtComputersAmount" required />
             </p>
             <p>
-                <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" value="${rental.getExtraChairsAmount()}" />
+                <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" value="${rental.getExtraChairsAmount()}" id="txtExtraChairsAmount" required />
             </p>
             <p>
                 <c:if test="${rental.isHasRoomAccess()}">
