@@ -1,0 +1,23 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 14, 2017, 8:00:41 PM
+    Author     : Fernando M. de Lima
+*/
+
+input, select {
+    margin: 10px;
+}
+
+table {
+    text-align: right;
+    margin: auto;
+}
+
+body {
+    background-color: gainsboro ;
+}
+

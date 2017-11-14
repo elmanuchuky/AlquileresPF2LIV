@@ -17,35 +17,56 @@
         <title>JSP Page</title>
         <jsp:include page="links.jsp"></jsp:include>
 
-        <script src="validar.js" type="text/javascript"></script>
+            <script src="validar.js" type="text/javascript"></script>
 
         </head>
         <body>
         <jsp:include page="menu.jsp"></jsp:include>
+        <br><br><br><br><br><br>
             <form action="NewClient" method="POST" onsubmit="return validarNuevoCliente();" >
-                <p>
-                    <label>Nombre:</label><input type="text" name="clientName" id="txtName" required />
+                <table>
+                    <tr>
+                    <p>
+                    <td><label>Nombre:</label></td>
+                    <td><input  class="form-control" width="80%" type="text" name="clientName" id="txtName" required /></td>
+                    </p>
+                    </tr>
+                    <tr>
+                    <p>
+                    <td><label>Apellido:</label></td>
+                    <td><input class="form-control" width="80%" type="text" name="clientSurename" id="txtSurename" required/></td>
+                    </p>
+                    </tr>
+                    <tr>
+                    <p>
+                    <td><label>Mail:</label></td>
+                    <td><input class="form-control" width="80%" type="text" name="clientMail" id="txtMail" required/></td>
+                    </p>
+                    </tr>
+                    <tr>
+                    <p>
+                    <td><label>Telefono:</label></td>
+                    <td><input class="form-control" width="80%" type="text" name="clientPhone" id="txtPhone" required/></td>
+                    </p>
+                    </tr>
+                    <tr>
+                    <p>
+                    <td><label>Documento:</label></td>
+                    <td><input class="form-control" width="80%" type="text" name="clientDocument" id="txtDocument" required/></td>
+                    </p>
+                    </tr>
+                    <tr>
+                    <p>
+                    <td><label>Tipo de documento:</label></td>
+                    <td> <select name="clientDocumentType" class="form-control">
+                        <c:forEach items="${types}" var="typeV">
+                            <option value="${typeV.getIdDocumentType()}">${typeV.getDocumentType()}</option>
+                        </c:forEach>
+                    </select></td>
                 </p>
-                <p>
-                    <label>Apellido:</label><input type="text" name="clientSurename" id="txtSurename" required/>
-                </p>
-                <p>
-                    <label>Mail:</label><input type="text" name="clientMail" id="txtMail" required/>
-                </p>
-                <p>
-                    <label>Telefono:</label><input type="text" name="clientPhone" id="txtPhone" required/>
-                </p>
-                <p>
-                    <label>Documento:</label><input type="text" name="clientDocument" id="txtDocument" required/>
-                </p>
-                <p>
-                    <label>Tipo de documento:</label><select name="clientDocumentType">
-                    <c:forEach items="${types}" var="typeV">
-                        <option value="${typeV.getIdDocumentType()}">${typeV.getDocumentType()}</option>
-                    </c:forEach>
-                </select>
-            </p>
-            <input type="submit" value="Aceptar" class="btn btn-primary" />
+                </tr>
+                <tr><td></td><td><input type="submit" value="Aceptar" class="btn btn-primary" /></td></tr>
+            </table>
         </form>
     </body>
 </html>
