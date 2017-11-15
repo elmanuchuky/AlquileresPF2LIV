@@ -19,17 +19,31 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"></jsp:include>
+        <br><br><br><br><br><br>
         <form action="NewStall" method="POST" onsubmit="return validarNuevoPuesto();">
+            <table>
+                <tr>
             <p>
-                <label>Piso:</label><input type="text" name="floor" id="txtFloor" required />
+            <td><label>Piso:</label></td>
+            <td><input class="form-control" width="80%" type="text" name="floor" id="txtFloor" required /></td>
             </p>
+                </tr>
+                <tr>
             <p>
-                <label>Cantidad de Sillas:</label><input type="text" name="chairsAmount" id="txtChairsAmount" required />
+            <td><label>Cantidad de Sillas:</label></td>
+            <td><input class="form-control" width="80%" type="text" name="chairsAmount" id="txtChairsAmount" required /></td>
             </p>
+                </tr>
+                <tr>
             <p>
-                <label>Tiene Ventanas:</label><input type="checkbox" name="withWindows" />
+            <td><label>Tiene Ventanas:</label></td>
+            <td><input class="checkbox-inline" type="checkbox" name="withWindows" /></td>
             </p>
-            <input type="submit" value="Aceptar" class="btn btn-primary" />
+                </tr>
+                <tr>
+                    <td></td><td><input type="submit" value="Aceptar" class="btn btn-primary" /></td>
+                </tr>
+            </table>
         </form>
     </body>
 </html>

@@ -16,14 +16,25 @@
     <body>
         <jsp:include page="menu.jsp"></jsp:include>
         <h1>Inicia sesion !!!</h1>
+        <br><br><br><br><br><br>
         <form action="Login" method="POST">
+            <table>
+                <tr>
             <p>
-                <label>Mail:</label><input type="mail" name="mail" />
+            <td><label>Mail:</label></td>
+            <td><input class="form-control" width="80%" type="mail" name="mail" /></td>
             </p>
+                </tr>
+                <tr>
             <p>
-                <label>Contraseña:</label><input type="password" name="password" />
+                <td><label>Contraseña:</label></td>
+                <td><input class="form-control" width="80%" type="password" name="password" /></td>
             </p>
-            <input type="submit" value="Aceptar">
+                </tr>
+                <tr>
+                    <td></td><td><input type="submit" value="Aceptar"></td>
+                </tr>
+            </table>
         </form>
     </body>
 </html>

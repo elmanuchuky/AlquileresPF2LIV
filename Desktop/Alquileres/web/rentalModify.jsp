@@ -20,23 +20,43 @@
         </head>
         <body>
         <jsp:include page="menu.jsp"></jsp:include>
+        <br><br><br><br><br><br>
             <form action="AlterRental" method="POST" onsubmit="return validarNuevoAlquiler();">
-            <input type="hidden" name="idRental" value="<%= request.getParameter("idRental") %>">
+                <table>
+                    <tr>
+                <input type="hidden" name="idRental" value="<%= request.getParameter("idRental") %>">
+                    </tr>
+                    <tr>
             <p>
-                <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" value="${rental.getComputersAmount()}" id="txtComputersAmount" required />
+                <td><label>Cantidad de Computadoras:</label></td>
+                <td><input class="form-control" width="80%" type="text" name="computersAmount" value="${rental.getComputersAmount()}" id="txtComputersAmount" required /></td>
             </p>
+                    </tr>
+                    <tr>
             <p>
-                <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" value="${rental.getExtraChairsAmount()}" id="txtExtraChairsAmount" required />
+                <td><label>Cantidad Extra de Sillas:</label></td>
+                <td><input class="form-control" width="80%" type="text" name="extraChairsAmount" value="${rental.getExtraChairsAmount()}" id="txtExtraChairsAmount" required /></td>
             </p>
+                    </tr>
+                <tr>
             <p>
+                
                 <c:if test="${rental.isHasRoomAccess()}">
-                    <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" checked />
+                    <td><label>Tiene Acceso a Sala:</label></td>
+                    <td><input class="checkbox-inline" type="checkbox" name="hasRoomAccess" checked /></td>
                 </c:if>
+                </tr>
+                <tr>
                 <c:if test="${!rental.isHasRoomAccess()}">
-                    <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" />
+                    <td><label>Tiene Acceso a Sala:</label></td>
+                    <td><input class="checkbox-inline" type="checkbox" name="hasRoomAccess" /></td>
                 </c:if>
             </p>
-            <input type="submit" value="Aceptar" class="btn btn-primary" />
+            </tr>
+            <tr>
+            <td></td><td><input type="submit" value="Aceptar" class="btn btn-primary" /></td>
+             </tr>  
+            </table>
         </form>
     </body>
 </html>

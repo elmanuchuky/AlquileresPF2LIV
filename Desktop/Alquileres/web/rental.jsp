@@ -22,27 +22,52 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"></jsp:include>
+        <br><br><br><br><br><br>
         <form action="NewRental" method="POST" onsubmit="return validarNuevoAlquiler();" >
-                <label>Cliente:</label><select name="client">
+            <table>
+               <tr>
+               <td><label>Cliente:</label></td>
+               <td>
+                <select name="client" class="form-control">
                 <c:forEach items="${clients}" var="clientV" >
                     <option value="${clientV.getIdClient()}">${clientV.getClientSurename()}, ${clientV.getClientName()}</option>
                 </c:forEach>
-                </select><br>
-                <label>Puesto:</label><select name="stall">
+                </select>
+                </td>
+                </tr><br>
+                <tr>
+                <td><label>Puesto:</label></td>
+                    <td>
+                    <select name="stall" class="form-control">
                 <c:forEach items="${stalls}" var="stallV" >
                     <option value="${stallV.getId()}">${stallV.toString()}</option>
                 </c:forEach>
-            </select>
-            <p>
-                <label>Cantidad de Computadoras:</label><input type="text" name="computersAmount" id="txtComputersAmount" required />
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                <p>
+                <td><label>Cantidad de Computadoras:</label></td>
+               <td><input class="form-control" width="80%" type="text" name="computersAmount" id="txtComputersAmount" required /></td>
+                </p>
+                </tr>
+            <tr>
+                <p>
+                <td><label>Cantidad Extra de Sillas:</label></td>
+                <td><input class="form-control" width="80%" type="text" name="extraChairsAmount" id="txtExtraChairsAmount" required /></td>
             </p>
+                </tr>
+                <tr>
             <p>
-                <label>Cantidad Extra de Sillas:</label><input type="text" name="extraChairsAmount" id="txtExtraChairsAmount" required />
+            <td><label>Tiene Acceso a Sala:</label></td>
+            <td><input type="checkbox" name="hasRoomAccess" id="chkHasRoomAccess" /></td>
             </p>
-            <p>
-                <label>Tiene Acceso a Sala:</label><input type="checkbox" name="hasRoomAccess" id="chkHasRoomAccess" />
-            </p>
-            <input type="submit" value="Aceptar" class="btn btn-primary" />
+            </tr>
+            <tr>
+                <td></td><td><input type="submit" value="Aceptar" class="btn btn-primary" /></td>
+            </tr>
+            </table>
+                
         </form>
     </body>
 </html>
